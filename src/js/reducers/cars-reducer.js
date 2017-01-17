@@ -1,16 +1,16 @@
 import cars from '../utils/cars-fixture';
 
-const LOAD   = 'LOAD';
-const CREATE = 'CREATE';
-const UPDATE = 'UPDATE';
-const REMOVE = 'REMOVE';
-const FILTER = 'FILTER';
+export const LOAD   = 'LOAD';
+export const CREATE = 'CREATE';
+export const UPDATE = 'UPDATE';
+export const REMOVE = 'REMOVE';
+export const FILTER = 'FILTER';
 
 export default function reducer(state = cars, action = {}) {
   switch (action.type) {
     case FILTER:      
       return state;
-    case LOAD:            
+    case LOAD:      
       return state;
     case REMOVE:
       return state;
@@ -18,7 +18,7 @@ export default function reducer(state = cars, action = {}) {
       return state;      
     case UPDATE:
       return state;
-    default:
+    default:      
       return state
   }
 }
@@ -27,8 +27,8 @@ export function filterCars(query) {
   return { type: FILTER, query };
 }
 
-export function loadCars() {
-  return { type: LOAD };
+export function loadCars(page) {
+  return { type: LOAD, page };
 }
 
 export function createCar(car) {
