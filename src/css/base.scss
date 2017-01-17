@@ -1,0 +1,56 @@
+@charset 'utf-8';
+@import '../../node_modules/bulma/bulma';
+
+$main-bg-color: #f6f6f6;
+$accent-blue: #37bbe4;
+$accent-gray: #e1e0dd;
+$accent-black: #35342f;
+$accent-red: #dd6464;
+
+$color-green: #07630b;
+$color-red: #960c0c;
+$color-blue: #04459a;
+
+$border-color: #c4c0c0;
+$shadow-color: #f0f0f7;
+
+body {
+  background-color: $main-bg-color;
+  color: $accent-black;  
+  height: 100%;
+}
+
+.main-container {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;  
+  
+  -webkit-flex-flow: column;
+  flex-flow: column;    
+  text-align: center;
+  align-items: center; 
+  height: 100%;
+}
+
+.main-container > * {
+  padding: 10px;
+  flex: 1 100%;
+}
+
+.header {
+  background: deepskyblue;
+  width: 85%;
+}
+
+.toolbar {
+  background: lightgreen;
+  width: 80%;
+}
+
+.car-list {
+  text-align: left;
+  background: lightsalmon;
+  width: 80%;
+}
