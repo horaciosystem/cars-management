@@ -13,7 +13,7 @@ export default class CarListItem extends Component {
         <td>{modelo}</td>
         <td>{marca}</td>
         <td>
-          <CarImageLink imagem={imagem} />
+          <CarImageLink image={imagem} />
         </td>
         <td>{combustivel}</td>
         <td>{valor}</td>

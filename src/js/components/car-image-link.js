@@ -1,22 +1,23 @@
 import React, { Component } from 'react';
 
 export default class CarImageLink extends Component {
-  render() {
-    const imagem = this.props.imagem;    
+  render() {        
+    let LinkComponent = null;
+    if (this.props.image) {
+      LinkComponent = (props) => <ImageLink image={props.image} />
+    } else {
+      LinkComponent = (props) => <NoImage />
+    }
+     
     return (
-      {imagem &&      
-        <a href={this.props.imagem}>
-          Imagem
-        </a>   
-      : <p>Sem foto</p>
-      }
+      <LinkComponent {...this.props} />
     );
   }
 }
 
 function ImageLink(props) {
   return (
-    <a href={this.props.imagem}>
+    <a href={props.image}>
       Imagem
     </a> 
   );
@@ -24,6 +25,6 @@ function ImageLink(props) {
 
 function NoImage(props) {
   return (
-    
+    <p>Sem foto</p>
   );
 }
