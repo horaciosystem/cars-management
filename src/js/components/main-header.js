@@ -8,7 +8,7 @@ export default class MainHeader extends Component {
 		render() {
 			return ( 
 				<div className="header">
-					<h1>Logo Conta Azul</h1>
+					<h1 className="title">Logo</h1>
 				</div>	
 			);
 

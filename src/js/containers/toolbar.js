@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export default class MainHeader extends Component {
+export default class Toolbar extends Component {
     constructor(props) {
     	super(props);
     }
@@ -8,7 +8,17 @@ export default class MainHeader extends Component {
 		render() {
 			return ( 
 				<div className="toolbar">
-					<h3>search bar</h3>
+					<div>					
+						<button 
+							className="button is-primary"
+							onClick={() => this.props.onClickNewCar() }
+						>
+							Novo Carro
+						</button>
+					</div>
+					<div>
+						<input className="input" type="text" placeholder="Pesquisar" />
+					</div>
 				</div>	
 			);
 		}

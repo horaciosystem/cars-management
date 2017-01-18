@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import {  
   loadCars
 } from '../reducers/cars-reducer';
+import CarListItem from '../components/car-list-item';
 
 export class CarList extends Component {
     constructor(props) {
@@ -13,13 +14,37 @@ export class CarList extends Component {
 		render() {
 			//TODO
 			//render only the car's grid
+			const { cars } = this.props;
+			console.log('cars', cars);
       console.log(this.props.cars);
 			return ( 
 				<div className="car-list">
-					<h2>cars grid</h2>
+					<table className="table is-striped">
+            <thead>
+							<tr>
+								<th>Placa</th>
+								<th>Modelo</th>
+								<th>Marca</th>
+								<th>Foto</th>
+								<th>Combustivel</th>
+								<th>Valor</th>
+              </tr>
+            </thead>
+            <tbody>
+            	{this.renderItems()}
+            </tbody>
+        	</table>
 				</div>	
 			);
+		}
 
+		renderItems() {
+			return this.props.cars.map(car => 
+				<CarListItem 
+					key={`car${car.id}`}
+				 	car={car} 
+				/>				
+			);
 		}
 }
 

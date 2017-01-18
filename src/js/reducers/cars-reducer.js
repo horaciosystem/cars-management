@@ -1,4 +1,4 @@
-import cars from '../fixtures/cars-fixture';
+import initialState from '../fixtures/cars-fixture';
 import rest from 'lodash/rest';
 export const LOAD   = 'LOAD';
 export const CREATE = 'CREATE';
@@ -6,7 +6,7 @@ export const UPDATE = 'UPDATE';
 export const REMOVE = 'REMOVE';
 export const FILTER = 'FILTER';
 
-let LAST_ID = 3;
+let NEXT_ID = 3;
 
 function getPaginatedItems(items, page = 1) {
 	const per_page = 5,
@@ -21,7 +21,7 @@ function getPaginatedItems(items, page = 1) {
 	};
 }
 
-export default function reducer(state = cars, action = {}) {
+export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case FILTER:      
       return state;
@@ -30,8 +30,8 @@ export default function reducer(state = cars, action = {}) {
     case REMOVE:
       return state.filter(car => car.id !== action.id);
     case CREATE:
-      LAST_ID = LAST_ID + 1;
-      const newCar = {...action.car, id: LAST_ID};
+      NEXT_ID = NEXT_ID + 1;
+      const newCar = {...action.car, id: NEXT_ID};
       return [...state, newCar];
     case UPDATE:
       state = state.filter(car => car.id !== action.car.id);            

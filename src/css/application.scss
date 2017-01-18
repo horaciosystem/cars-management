@@ -16,7 +16,6 @@ $shadow-color: #f0f0f7;
 
 body {
   background-color: $main-bg-color;
-  color: $accent-black;  
   height: 100%;
 }
 
@@ -41,16 +40,21 @@ body {
 
 .header {
   background: deepskyblue;
+  text-align: left;
   width: 85%;
 }
 
-.toolbar {
-  background: lightgreen;
+.toolbar {  
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.car-list {  
   width: 80%;
 }
 
-.car-list {
-  text-align: left;
-  background: lightsalmon;
-  width: 80%;
+.modal-header {
+  display: flex;
+  justify-content: space-between;
 }

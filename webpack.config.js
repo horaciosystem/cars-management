@@ -20,7 +20,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: [/node_modules/, /styles/],
-        loaders: ['react-hot', 'babel'],
+        loaders: ['react-hot-loader/webpack', 'babel'],
         include: path.join(__dirname, 'src')
       },
       {
