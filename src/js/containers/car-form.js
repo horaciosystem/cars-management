@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import { Field, reduxForm } from 'redux-form';
 
 const renderInput = field => {
-  const style = field.meta.error ? 'input is-small is-danger' : 'input is-small'
+  const style = (field.meta.touched && field.meta.error) ? 'input is-danger' : 'input'
   return (
     <div>
       <input {...field.input} type={field.type} className={style} />
@@ -13,37 +13,22 @@ const renderInput = field => {
   )
 };
 
+const upper = value => value && value.toUpperCase();
+
 const validate = values => {
   const errors = {}
-  if (!values.codigo_empresa) {
-    errors.codigo_empresa = 'Campo requirido';
-  } else if (values.codigo_empresa < 0 || values.codigo_empresa > 999) {
-    errors.codigo_empresa = 'Código inválido';
-  }
 
-  if (!values.grupo) {
-    errors.grupo = 'Campo requirido';
-  } else if (values.grupo.length != 5) {
-    errors.grupo = 'Grupo inválido';
-  }
+  if (!values.placa) {
+    errors.placa = 'Campo requirido';
+  } 
 
-  if (!values.alternativa) {
-    errors.alternativa = 'Campo requirido';
-  } else if (values.alternativa < 0 || values.alternativa > 99) {
-    errors.alternativa = 'Alternativa inválida';
-  }
+  if (!values.marca) {
+    errors.marca = 'Campo requirido';
+  } 
 
-  if (!values.mes_versao) {
-    errors.mes_versao = 'Campo requirido';
-  } else if (values.mes_versao < 1 || values.mes_versao > 12) {
-    errors.mes_versao = 'Mês inválido';
-  }
-
-  if (!values.ano_versao) {
-    errors.ano_versao = 'Campo requirido';
-  } else if (values.ano_versao < 1111 || values.ano_versao > 9999) {
-    errors.ano_versao = 'Ano inválido';
-  }
+  if (!values.modelo) {
+    errors.modelo = 'Campo requirido';
+  } 
 
   return errors;
 }
@@ -68,9 +53,6 @@ const customStyles = {
 class CarForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      initialValues: this.props.initialValues
-    }
   }
 
   onSubmit(form) {
@@ -79,7 +61,7 @@ class CarForm extends Component {
   }
 
   render() {
-    const { title, toogleModal, handleSubmit, modalIsOpen, error } = this.props;
+    const { title, initialValues, toogleModal, handleSubmit, modalIsOpen, error } = this.props;
     return (
       <Modal
         isOpen={modalIsOpen}
@@ -87,31 +69,69 @@ class CarForm extends Component {
         style={customStyles}
         contentLabel="Modal"
       >
-       <form onSubmit={handleSubmit}>
-
-        <div>
-          <label htmlFor="username">Username</label>
-          <Field
-            name="username"                   // Specify field name
-            component={renderInput}           // Specify render component above
-            type="text"/>                     // "type" prop passed to renderInput
-        </div>
-
-        <div>
-          <label htmlFor="password">Password</label>
-          <Field
-            name="password"                   // Specify field name
-            component={renderInput}           // Reuse same render component
-            type="password"/>                 // "type" prop passed to renderInput
-        </div>
-
-        <button type="submit">Submit</button>
-      </form>
+       <form
+          onSubmit={handleSubmit}          
+        >
+        <header className="modal-card-head">
+          <p className="modal-card-title">{ title }</p>
+          <button type="submit" className="button is-primary save-button">
+            Salvar
+          </button>
+          <a className="button is-primary is-inverted"
+            onClick={() => toogleModal()}>
+            Cancel
+          </a>
+        </header>
+        <section className="modal-card-body">
+          {error &&
+            <div className="columns">
+              <div className="column is-12 notification is-danger">
+                {error}
+              </div>
+          </div>
+          }
+          <div className="columns">
+            <div className="column is-4">
+              <label htmlFor="placa" className="label">Placa</label>
+              <Field name="placa" component={renderInput} type="text" normalize={upper} />
+            </div>
+            <div className="column is-4">
+              <label htmlFor="marca" className="label">Marca</label>
+              <Field name="marca" component={renderInput} type="text" />
+            </div>
+            <div className="column is-4">
+              <label htmlFor="modelo" className="label">Modelo</label>
+              <Field name="modelo" component={renderInput} type="text"/>
+            </div>
+          </div>
+          <div className="columns">
+            <div className="column is-4">
+              <label htmlFor="valor" className="label">Valor</label>
+              <Field name="valor" component={renderInput} type="number" />
+            </div>
+            <div className="column is-4">
+              <label htmlFor="combustivel" className="label">Combustível</label>
+              <span className="select">
+                <Field name="combustivel" component="select">                  
+                  <option value="Flex">Flex</option>
+                  <option value="Gasolina">Gasolina</option>
+                  <option value="Alcool">Álcool</option>
+                </Field>
+              </span>              
+            </div>
+            <div className="column is-4">
+              <label htmlFor="imagem" className="label">Imagem</label>
+              <Field name="imagem" component={renderInput} type="text" />
+            </div>
+          </div>
+        </section>
+        </form>
     </Modal>
     );
   }
 }
 
 export default reduxForm({
-  form: 'carForm'
+  form: 'carForm',
+  validate
 })(CarForm);

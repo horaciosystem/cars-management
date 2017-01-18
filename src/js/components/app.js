@@ -3,8 +3,13 @@ import CarList from '../containers/car-list';
 import ToolBar from '../containers/toolbar';
 import MainHeader from '../components/main-header';
 import CarForm from '../containers/car-form';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {  
+  createCar,
+} from '../reducers/cars-reducer';
 
-export default class App extends Component {
+export class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,6 +27,11 @@ export default class App extends Component {
     })
   }
 
+  onCreateCar(car) {
+    this.props.createCar(car);
+    this.hadleToogleModal();
+  }
+
   render() {
     const modalIsOpen = this.state.modalIsOpen;
     return (
@@ -34,7 +44,7 @@ export default class App extends Component {
         {this.state.modalIsOpen &&
           <CarForm
             title="Cadastrar Veículo"
-            onSubmit={() => console.log('teste')}
+            onSubmit={(car) => this.onCreateCar(car) }
             initialValues={null}
             toogleModal={() => this.hadleToogleModal() }
             modalIsOpen
@@ -44,3 +54,15 @@ export default class App extends Component {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    cars: state.cars
+  };
+}
+
+const mapDispatchToProps = dispatch => ({
+   createCar: bindActionCreators(createCar, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
