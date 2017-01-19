@@ -3,10 +3,12 @@ import CarImageLink from './car-image-link';
 
 export default class CarListItem extends Component {
   render() {
+    const {car, onEdit, onDelete} = this.props;
     const {
       placa, modelo, marca,
-      imagem, combustivel, valor
-    } = this.props.car;
+      imagem, combustivel, valor      
+    } = car;
+    
     return(
       <tr>
         <td>{placa}</td>
@@ -17,6 +19,16 @@ export default class CarListItem extends Component {
         </td>
         <td>{combustivel}</td>
         <td>{valor}</td>
+        <td>
+        <div className="car-item-buttons">
+            <a onClick={() => onEdit(car)}>
+              Editar
+            </a>                          
+            <a onClick={() => onDelete(car)}>
+              Excluir
+            </a>
+          </div>
+        </td>
       </tr>
     );
   }

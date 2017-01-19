@@ -9,17 +9,19 @@ import CarListItem from '../components/car-list-item';
 export class CarList extends Component {
     constructor(props) {
     	super(props);
+			
+			this.onEditCar = this.onEditCar.bind(this);
     }
 
+		onEditCar(car) {			
+			this.props.toogleModal(car);
+		}
+
 		render() {
-			//TODO
-			//render only the car's grid
 			const { cars } = this.props;
-			console.log('cars', cars);
-      console.log(this.props.cars);
 			return ( 
 				<div className="car-list">
-					<table className="table is-striped">
+					<table className="table is-striped is-bordered">
             <thead>
 							<tr>
 								<th>Placa</th>
@@ -28,6 +30,7 @@ export class CarList extends Component {
 								<th>Foto</th>
 								<th>Combustivel</th>
 								<th>Valor</th>
+								<th></th>								
               </tr>
             </thead>
             <tbody>
@@ -42,7 +45,8 @@ export class CarList extends Component {
 			return this.props.cars.map(car => 
 				<CarListItem 
 					key={`car${car.id}`}
-				 	car={car} 
+				 	car={car}
+					onEdit={this.onEditCar}
 				/>				
 			);
 		}

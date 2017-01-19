@@ -14,6 +14,7 @@ $color-blue: #04459a;
 $border-color: #c4c0c0;
 $shadow-color: #f0f0f7;
 
+html,
 body {
   background-color: $main-bg-color;
   height: 100%;
@@ -59,10 +60,13 @@ body {
   justify-content: space-between;
 }
 
-select {
+select,
+.select
+{
   width: 100%;
 }
 
-.select {
-  width: 100%;
+.car-item-buttons {
+  display: flex;
+  justify-content: space-between;
 }

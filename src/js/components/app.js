@@ -7,46 +7,59 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {  
   createCar,
+  updateCar,
 } from '../reducers/cars-reducer';
 
 export class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalIsOpen: false
+      modalIsOpen: false,
+      carToUpdate: null
     }
 
     this.hadleToogleModal = this.hadleToogleModal.bind(this);
+    this.onCreateCar = this.onCreateCar.bind(this);
+    this.onUpdateCar = this.onUpdateCar.bind(this);
   }
 
-  hadleToogleModal() {
+  hadleToogleModal(car) {
     this.setState((prevState, props) => {
       return {
-        modalIsOpen: !prevState.modalIsOpen
+        modalIsOpen: !prevState.modalIsOpen,
+        carToUpdate: car
       }
     })
   }
 
   onCreateCar(car) {
     this.props.createCar(car);
-    this.hadleToogleModal();
+    this.hadleToogleModal(null);
+  }
+
+  onUpdateCar(car) {
+    this.props.updateCar(car);
+    this.hadleToogleModal(null);
   }
 
   render() {
-    const modalIsOpen = this.state.modalIsOpen;
+    const {modalIsOpen, carToUpdate } = this.state;
+    
     return (
       <div className="main-container">
         <MainHeader />
         <ToolBar 
-          onClickNewCar={() => this.hadleToogleModal() }
+          onClickNewCar={() => this.hadleToogleModal(null) }
         />
-        <CarList />   
+        <CarList 
+          toogleModal={this.hadleToogleModal}
+        />   
         {this.state.modalIsOpen &&
           <CarForm
-            title="Cadastrar Veículo"
-            onSubmit={(car) => this.onCreateCar(car) }
-            initialValues={null}
-            toogleModal={() => this.hadleToogleModal() }
+            title={carToUpdate ? 'Editar Veículo' : 'Cadastrar Veículo'}
+            onSubmit={carToUpdate ? this.onUpdateCar : this.onCreateCar}
+            initialValues={carToUpdate ? carToUpdate : null}
+            toogleModal={this.hadleToogleModal}
             modalIsOpen
           />          
         }
@@ -63,6 +76,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
    createCar: bindActionCreators(createCar, dispatch),
+   updateCar: bindActionCreators(updateCar, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
