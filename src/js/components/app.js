@@ -8,9 +8,11 @@ import { bindActionCreators } from 'redux';
 import {  
   createCar,
   updateCar,
+  removeCar,
 } from '../reducers/cars-reducer';
 
 export class App extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -18,12 +20,13 @@ export class App extends Component {
       carToUpdate: null
     }
 
-    this.hadleToogleModal = this.hadleToogleModal.bind(this);
+    this.handleToogleModal = this.handleToogleModal.bind(this);
     this.onCreateCar = this.onCreateCar.bind(this);
     this.onUpdateCar = this.onUpdateCar.bind(this);
+    this.onDeleteCar = this.onDeleteCar.bind(this);
   }
 
-  hadleToogleModal(car) {
+  handleToogleModal(car) {
     this.setState((prevState, props) => {
       return {
         modalIsOpen: !prevState.modalIsOpen,
@@ -42,6 +45,10 @@ export class App extends Component {
     this.hadleToogleModal(null);
   }
 
+  onDeleteCar(carId) {
+    this.props.removeCar(carId);    
+  }
+
   render() {
     const {modalIsOpen, carToUpdate } = this.state;
     
@@ -53,6 +60,7 @@ export class App extends Component {
         />
         <CarList 
           toogleModal={this.hadleToogleModal}
+          onDelete={this.onDeleteCar}
         />   
         {this.state.modalIsOpen &&
           <CarForm
@@ -77,6 +85,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => ({
    createCar: bindActionCreators(createCar, dispatch),
    updateCar: bindActionCreators(updateCar, dispatch),
+   removeCar: bindActionCreators(removeCar, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

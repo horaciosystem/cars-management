@@ -9,16 +9,10 @@ import CarListItem from '../components/car-list-item';
 export class CarList extends Component {
     constructor(props) {
     	super(props);
-			
-			this.onEditCar = this.onEditCar.bind(this);
     }
 
-		onEditCar(car) {			
-			this.props.toogleModal(car);
-		}
-
 		render() {
-			const { cars } = this.props;
+			const cars = this.props.cars;
 			return ( 
 				<div className="car-list">
 					<table className="table is-striped is-bordered">
@@ -41,12 +35,13 @@ export class CarList extends Component {
 			);
 		}
 
-		renderItems() {
+		renderItems(toogleModal, onDelete) {			
 			return this.props.cars.map(car => 
 				<CarListItem 
 					key={`car${car.id}`}
 				 	car={car}
-					onEdit={this.onEditCar}
+					onEdit={this.props.toogleModal}
+					onDelete={this.props.onDelete}
 				/>				
 			);
 		}
