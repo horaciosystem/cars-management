@@ -23,11 +23,16 @@ function getPaginatedItems(items, page = 1) {
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    case FILTER:      
-      return state.filter(car => 
-        car.combustivel.toLowerCase().includes(action.query.toLowerCase()) 
-         || car.marca.toLowerCase().includes(action.query.toLowerCase())
-      );
+    case FILTER: {
+      const filters = extractFiltersFromQuery(action.query);
+      return filters.reduce((acc, filter) => {        
+        let newItems = acc.filter(car => 
+          car.combustivel.toLowerCase().includes(filter.toLowerCase()) 
+            || car.marca.toLowerCase().includes(filter.toLowerCase())
+        );
+        return acc = newItems;
+      }, state);      
+    }
     case LOAD:      
       return state;
     case REMOVE:
@@ -42,6 +47,11 @@ export default function reducer(state = initialState, action = {}) {
     default:      
       return state;
   }
+}
+
+function extractFiltersFromQuery(query) {
+  const listFilters = query.split(' ');
+  return listFilters.slice(0, 2);
 }
 
 export function filterCars(query) {

@@ -84,7 +84,7 @@ describe('CarList reducer', () => {
     ).toEqual(5)
   });
 
-  it('should FILTER cars by partial description of the fuel', () => {
+  it('should FILTER cars by fuel partial description', () => {
     const query = 'fl';
     expect(
       reducer(manyCars, filterCars(query)).length
@@ -105,11 +105,46 @@ describe('CarList reducer', () => {
     ).toEqual(5)
   });
 
-  it('should FILTER cars by partial brand description', () => {
+  it('should FILTER cars by brand partial description', () => {
     const query = 'volks';
     expect(
       reducer(manyCars, filterCars(query)).length
     ).toEqual(9)
+  });
+
+  it('should FILTER cars by fuel and brand', () => {
+    const query = 'flex volkswagem';
+    expect(
+      reducer(manyCars, filterCars(query)).length
+    ).toEqual(1)
+  });
+
+  it('should FILTER cars by brand and fuel', () => {
+    const query = 'volkswagem flex';
+    expect(
+      reducer(manyCars, filterCars(query)).length
+    ).toEqual(1)
+  });
+  
+  it('should FILTER cars by fuel partial decription and brand', () => {
+    const query = 'gas volkswagem';
+    expect(
+      reducer(manyCars, filterCars(query)).length
+    ).toEqual(2)
+  });
+
+  it('should FILTER cars by fuel and brand partial description', () => {
+    const query = 'gasolina volks';
+    expect(
+      reducer(manyCars, filterCars(query)).length
+    ).toEqual(3)
+  });
+
+  it('should return the same state when FILTER with an empty query', () => {
+    const query = '';
+    expect(
+      reducer(manyCars, filterCars(query))
+    ).toEqual(manyCars)
   });
 
 
