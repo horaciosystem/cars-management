@@ -37,12 +37,12 @@ export class App extends Component {
 
   onCreateCar(car) {
     this.props.createCar(car);
-    this.hadleToogleModal(null);
+    this.handleToogleModal(null);
   }
 
   onUpdateCar(car) {
     this.props.updateCar(car);
-    this.hadleToogleModal(null);
+    this.handleToogleModal(null);
   }
 
   onDeleteCar(carId) {
@@ -56,10 +56,10 @@ export class App extends Component {
       <div className="main-container">
         <MainHeader />
         <ToolBar 
-          onClickNewCar={() => this.hadleToogleModal(null) }
+          onClickNewCar={this.handleToogleModal}
         />
         <CarList 
-          toogleModal={this.hadleToogleModal}
+          toogleModal={this.handleToogleModal}
           onDelete={this.onDeleteCar}
         />   
         {this.state.modalIsOpen &&
@@ -67,7 +67,7 @@ export class App extends Component {
             title={carToUpdate ? 'Editar Veículo' : 'Cadastrar Veículo'}
             onSubmit={carToUpdate ? this.onUpdateCar : this.onCreateCar}
             initialValues={carToUpdate ? carToUpdate : null}
-            toogleModal={this.hadleToogleModal}
+            toogleModal={this.handleToogleModal}
             modalIsOpen
           />          
         }
