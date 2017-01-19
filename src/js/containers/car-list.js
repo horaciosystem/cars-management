@@ -9,8 +9,7 @@ export class CarList extends Component {
     	super(props);
     }
 
-		render() {
-			const cars = this.props.cars;
+		render() {			
 			return ( 
 				<div className="car-list">
 					<table className="table is-striped is-bordered">
@@ -33,8 +32,13 @@ export class CarList extends Component {
 			);
 		}
 
-		renderItems(toogleModal, onDelete) {			
-			return this.props.cars.map(car => 
+		renderItems(toogleModal, onDelete) {
+			const { cars, filterFunction } = this.props.carsState;
+			let filterdCars = cars;
+			if (filterFunction) {
+				filterdCars = filterFunction(cars);
+			}
+			return filterdCars.map(car => 
 				<CarListItem 
 					key={`car${car.id}`}
 				 	car={car}
@@ -47,7 +51,7 @@ export class CarList extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    cars: state.cars
+    carsState: state.cars
   };
 }
 

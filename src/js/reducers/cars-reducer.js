@@ -1,4 +1,4 @@
-import initialState from '../fixtures/cars-fixture';
+import initialStateCars from '../fixtures/cars-fixture';
 import rest from 'lodash/rest';
 export const LOAD   = 'LOAD';
 export const CREATE = 'CREATE';
@@ -21,29 +21,46 @@ function getPaginatedItems(items, page = 1) {
 	};
 }
 
+const initialState = {
+  filterFunction: null,
+  cars: initialStateCars
+}
+
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    case FILTER: {
+    case FILTER: {      
       const filters = extractFiltersFromQuery(action.query);
-      return filters.reduce((acc, filter) => {        
-        let newItems = acc.filter(car => 
-          car.combustivel.toLowerCase().includes(filter.toLowerCase()) 
-            || car.marca.toLowerCase().includes(filter.toLowerCase())
-        );
-        return acc = newItems;
-      }, state);      
+      const filterFunction = (filters) => {
+        const currying = (items) => {
+          return filters.reduce((acc, filter) => {     
+            let newItems = acc.filter(car => 
+              car.combustivel.toLowerCase().includes(filter.toLowerCase()) 
+                || car.marca.toLowerCase().includes(filter.toLowerCase())
+            );
+            return acc = newItems;
+          }, items);
+        }
+        return currying;
+      }
+      let foo = filterFunction(filters);
+      return {...state, filterFunction: foo};
     }
     case LOAD:      
       return state;
-    case REMOVE:
-      return state.filter(car => car.id !== action.id);
-    case CREATE:
+    case REMOVE: {
+      const cars = state.cars.filter(car => car.id !== action.id);
+      return {...state, cars};
+    }
+    case CREATE: {
       NEXT_ID = NEXT_ID + 1;
       const newCar = {...action.car, id: NEXT_ID};
-      return [...state, newCar];
+      const cars = [...state.cars, newCar];
+      return {...state, cars};
+    }
     case UPDATE:
-      state = state.filter(car => car.id !== action.car.id);            
-      return [...state, action.car];
+      const filteredCars = state.cars.filter(car => car.id !== action.car.id);
+      const cars = [...filteredCars, action.car];
+      return {...state, cars};
     default:      
       return state;
   }
