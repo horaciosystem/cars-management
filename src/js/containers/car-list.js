@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {  
-  loadCars
-} from '../reducers/cars-reducer';
+import { loadCars } from '../reducers/cars-reducer';
 import CarListItem from '../components/car-list-item';
 
 export class CarList extends Component {
