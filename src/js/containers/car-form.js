@@ -78,7 +78,7 @@ class CarForm extends Component {
             Salvar
           </button>
           <a className="button is-primary is-inverted"
-            onClick={() => toogleModal()}>
+            onClick={toogleModal}>
             Cancel
           </a>
         </header>

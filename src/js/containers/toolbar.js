@@ -11,7 +11,7 @@ export default class Toolbar extends Component {
 					<div>					
 						<button 
 							className="button is-primary"
-							onClick={this.props.onNewCar}
+							onClick={() => this.props.onNewCar(null)}
 						>
 							Novo Carro
 						</button>
