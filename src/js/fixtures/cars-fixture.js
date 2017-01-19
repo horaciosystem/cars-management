@@ -54,7 +54,7 @@ const manyCars = [
     id: 3,
     combustivel: 'Alcool',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
-    marca: 'Volkswagen',
+    marca: 'Fiat',
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
@@ -63,7 +63,7 @@ const manyCars = [
     id: 4,
     combustivel: 'Alcool',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
-    marca: 'Volkswagen',
+    marca: 'Volkswagem',
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
@@ -72,14 +72,14 @@ const manyCars = [
     id: 5,
     combustivel: 'Alcool',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
-    marca: 'Volkswagen',
+    marca: 'Puma',
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
   },
   { 
     id: 6,
-    combustivel: 'Alcool',
+    combustivel: 'Gasolina',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
     marca: 'Volkswagen',
     modelo: 'Fusca',
@@ -88,16 +88,16 @@ const manyCars = [
   },
   { 
     id: 7,
-    combustivel: 'Alcool',
+    combustivel: 'Flex',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
-    marca: 'Volkswagen',
+    marca: 'Gm',
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
   },
   { 
     id: 8,
-    combustivel: 'Alcool',
+    combustivel: 'Flex',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
     marca: 'Volkswagen',
     modelo: 'Fusca',
@@ -106,9 +106,9 @@ const manyCars = [
   },
   { 
     id: 9,
-    combustivel: 'Alcool',
+    combustivel: 'Gasolina',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
-    marca: 'Volkswagen',
+    marca: 'Gm',
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
@@ -117,7 +117,7 @@ const manyCars = [
     id: 10,
     combustivel: 'Alcool',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
-    marca: 'Volkswagen',
+    marca: 'Fiat',
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
@@ -133,27 +133,27 @@ const manyCars = [
   },
   { 
     id: 12,
-    combustivel: 'Alcool',
+    combustivel: 'Gasolina',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
-    marca: 'Volkswagen',
+    marca: 'Mercedes',
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
   },
   { 
     id: 13,
-    combustivel: 'Alcool',
+    combustivel: 'Gasolina',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
-    marca: 'Volkswagen',
+    marca: 'Volkswagem',
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
   },
   { 
     id: 14,
-    combustivel: 'Alcool',
+    combustivel: 'Flex',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
-    marca: 'Volkswagen',
+    marca: 'Mercedes',
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
@@ -169,7 +169,7 @@ const manyCars = [
   },
   { 
     id: 16,
-    combustivel: 'Alcool',
+    combustivel: 'Flex',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
     marca: 'Volkswagen',
     modelo: 'Fusca',

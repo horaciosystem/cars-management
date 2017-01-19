@@ -23,15 +23,6 @@ describe('CarList reducer', () => {
     ).toEqual(initialState)
   });
 
-  //TODO pagination
-  // it('should LOAD the first 5 cars', () => {
-  //   const newState = reducer(manyCars, loadCars(1))
-  //   expect(newState).toEqual(pageOne);
-  //   const ids = newState.map(car => car.id);
-  //   expect(ids).toEqual([1, 2, 3, 4, 5]);
-  // });
-
-
   it('should handle CREATE', () => {
     const carToAdd = { 
       combustivel: 'Flex',
@@ -74,11 +65,51 @@ describe('CarList reducer', () => {
   });
 
   it('should handle REMOVE', () => {
-    
     expect(
         reducer(initialState, removeCar(3))
           .some(car => car.id === 3)
     ).toBe(false);
+  });
+
+  it('should not change the state when REMOVE an inexistent car', () => {
+    expect(
+        reducer(initialState, removeCar(14234))          
+    ).toEqual(initialState);
+  });
+
+  it('should FILTER cars by fuel', () => {
+    const query = 'flex';
+    expect(
+      reducer(manyCars, filterCars(query)).length
+    ).toEqual(5)
+  });
+
+  it('should FILTER cars by partial description of the fuel', () => {
+    const query = 'fl';
+    expect(
+      reducer(manyCars, filterCars(query)).length
+    ).toEqual(5)
+  });
+
+  it('should FILTER cars by brand Volkswagem', () => {
+    const query = 'volkswagem';
+    expect(
+      reducer(manyCars, filterCars(query)).length
+    ).toEqual(4)
+  });
+
+  it('should FILTER cars by brand Volkswagen', () => {
+    const query = 'volkswagen';
+    expect(
+      reducer(manyCars, filterCars(query)).length
+    ).toEqual(5)
+  });
+
+  it('should FILTER cars by partial brand description', () => {
+    const query = 'volks';
+    expect(
+      reducer(manyCars, filterCars(query)).length
+    ).toEqual(9)
   });
 
 

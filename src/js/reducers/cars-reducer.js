@@ -24,7 +24,10 @@ function getPaginatedItems(items, page = 1) {
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case FILTER:      
-      return state;
+      return state.filter(car => 
+        car.combustivel.toLowerCase().includes(action.query.toLowerCase()) 
+         || car.marca.toLowerCase().includes(action.query.toLowerCase())
+      );
     case LOAD:      
       return state;
     case REMOVE:
