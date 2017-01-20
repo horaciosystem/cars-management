@@ -36,7 +36,7 @@ export class CarList extends Component {
 			const pagination = this.props.carsState.pagination;
 			return pagination.data.map(car => 
 				<CarListItem 
-					key={`car${car.id}`}
+					key={`car-${car.id}-${car.marca}-${car.modelo}`}
 				 	car={car}
 					onEdit={this.props.toogleModal}
 					onDelete={this.props.onDelete}
