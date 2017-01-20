@@ -1,18 +1,7 @@
 @charset 'utf-8';
 @import '../../node_modules/bulma/bulma';
 
-$main-bg-color: #f6f6f6;
-$accent-blue: #37bbe4;
-$accent-gray: #e1e0dd;
-$accent-black: #35342f;
-$accent-red: #dd6464;
-
-$color-green: #07630b;
-$color-red: #960c0c;
-$color-blue: #04459a;
-
-$border-color: #c4c0c0;
-$shadow-color: #f0f0f7;
+$main-bg-color: #F1F4F9;
 
 html,
 body {
@@ -40,7 +29,7 @@ body {
 }
 
 .header {
-  background: deepskyblue;
+  background: #2687E9;
   text-align: left;
   width: 85%;
 }
@@ -70,4 +59,12 @@ select,
 .car-item-buttons {
   display: flex;
   justify-content: space-between;
+}
+
+.table-header {
+  background: #F8FAFC;
+}
+
+.foo:hover {
+  background-color: #D8E9FB;
 }

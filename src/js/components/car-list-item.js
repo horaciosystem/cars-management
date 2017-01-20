@@ -10,7 +10,7 @@ export default class CarListItem extends Component {
     } = car;
 
     return(
-      <tr>
+      <tr className="foo">
         <td>{placa}</td>
         <td>{modelo}</td>
         <td>{marca}</td>
@@ -20,7 +20,7 @@ export default class CarListItem extends Component {
         <td>{combustivel}</td>
         <td>{valor}</td>
         <td>
-        <div className="car-item-buttons">
+          <div className="car-item-buttons">
             <a onClick={() => onEdit(car)}>
               Editar
             </a>                          

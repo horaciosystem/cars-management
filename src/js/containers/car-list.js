@@ -12,16 +12,16 @@ export class CarList extends Component {
 		render() {			
 			return ( 
 				<div className="car-list">
-					<table className="table is-striped is-bordered">
+					<table className="table is-bordered">
             <thead>
 							<tr>
-								<th>Placa</th>
-								<th>Modelo</th>
-								<th>Marca</th>
-								<th>Foto</th>
-								<th>Combustivel</th>
-								<th>Valor</th>
-								<th></th>								
+								<th className="table-header">Placa</th>
+								<th className="table-header">Modelo</th>
+								<th className="table-header">Marca</th>
+								<th className="table-header">Foto</th>
+								<th className="table-header">Combustivel</th>
+								<th className="table-header">Valor</th>
+								<th className="table-header"></th>								
               </tr>
             </thead>
             <tbody>
