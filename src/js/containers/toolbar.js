@@ -19,7 +19,6 @@ export class Toolbar extends Component {
   	}
 
 		onFilterCars(query) {
-			console.log(query);
 			this.props.filterCars(query);
 		}
 

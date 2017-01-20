@@ -201,7 +201,7 @@ const pageOne = [
     id: 3,
     combustivel: 'Alcool',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
-    marca: 'Volkswagen',
+    marca: 'Fiat',
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
@@ -210,7 +210,7 @@ const pageOne = [
     id: 4,
     combustivel: 'Alcool',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
-    marca: 'Volkswagen',
+    marca: 'Volkswagem',
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
@@ -219,7 +219,7 @@ const pageOne = [
     id: 5,
     combustivel: 'Alcool',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
-    marca: 'Volkswagen',
+    marca: 'Puma',
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'

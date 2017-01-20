@@ -33,12 +33,8 @@ export class CarList extends Component {
 		}
 
 		renderItems(toogleModal, onDelete) {
-			const { cars, filterFunction } = this.props.carsState;
-			let filterdCars = cars;
-			if (filterFunction) {
-				filterdCars = filterFunction(cars);
-			}
-			return filterdCars.map(car => 
+			const pagination = this.props.carsState.pagination;
+			return pagination.data.map(car => 
 				<CarListItem 
 					key={`car${car.id}`}
 				 	car={car}

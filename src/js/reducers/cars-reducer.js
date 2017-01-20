@@ -1,5 +1,5 @@
-import initialStateCars from '../fixtures/cars-fixture';
-import rest from 'lodash/rest';
+import {initialStateCars, manyCars } from '../fixtures/cars-fixture';
+import rest from 'lodash/fp/rest';
 export const LOAD   = 'LOAD';
 export const CREATE = 'CREATE';
 export const UPDATE = 'UPDATE';
@@ -8,61 +8,68 @@ export const FILTER = 'FILTER';
 
 let NEXT_ID = 3;
 
-function getPaginatedItems(items, page = 1) {
-	const per_page = 5,
-	    offset = (page - 1) * per_page,
-	    paginatedItems = rest(items, offset).slice(0, per_page);
+export function getPaginatedItems(items, page = 1) {
+	const per_page = 5;
+	const offset = (page - 1) * per_page;
+	const paginatedItems = items.slice(offset, offset + per_page);
+      
 	return {
 		page: page,
-		per_page: per_page,
+		perPage: per_page,
 		total: items.length,
-		total_pages: Math.ceil(items.length / per_page),
+		totalPages: Math.ceil(items.length / per_page),
 		data: paginatedItems
 	};
 }
 
 const initialState = {
   filterFunction: null,
-  cars: initialStateCars
+  cars: manyCars  
+}
+
+function filterFunction(filters, items) {
+  return filters.reduce((acc, filter) => {     
+    let newItems = acc.filter(car => 
+      car.combustivel.toLowerCase().includes(filter.toLowerCase()) 
+        || car.marca.toLowerCase().includes(filter.toLowerCase())
+    );
+    return acc = newItems;
+  }, items);
 }
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case FILTER: {      
-      const filters = extractFiltersFromQuery(action.query);
-      const filterFunction = (filters) => {
-        const currying = (items) => {
-          return filters.reduce((acc, filter) => {     
-            let newItems = acc.filter(car => 
-              car.combustivel.toLowerCase().includes(filter.toLowerCase()) 
-                || car.marca.toLowerCase().includes(filter.toLowerCase())
-            );
-            return acc = newItems;
-          }, items);
-        }
-        return currying;
-      }
-      let foo = filterFunction(filters);
-      return {...state, filterFunction: foo};
+      const filters = extractFiltersFromQuery(action.query);         
+      const filteredCars = filterFunction(filters, state.cars);
+      const pagination = getPaginatedItems(filteredCars);
+      return {...state, pagination};
     }
-    case LOAD:      
-      return state;
+    case LOAD:
+      const pagination = getPaginatedItems(state.cars, action.page);
+      return {...state, pagination};      
     case REMOVE: {
       const cars = state.cars.filter(car => car.id !== action.id);
-      return {...state, cars};
+      const pagination = getPaginatedItems(cars);      
+      return {...state, cars, pagination};
     }
     case CREATE: {
       NEXT_ID = NEXT_ID + 1;
       const newCar = {...action.car, id: NEXT_ID};
+      console.log('car', newCar)
       const cars = [...state.cars, newCar];
-      return {...state, cars};
+      const pagination = getPaginatedItems(cars);
+      return {...state, cars, pagination};
     }
-    case UPDATE:
+    case UPDATE: {
       const filteredCars = state.cars.filter(car => car.id !== action.car.id);
       const cars = [...filteredCars, action.car];
       return {...state, cars};
-    default:      
-      return state;
+    }
+    default: {     
+      const pagination = getPaginatedItems(state.cars);
+      return {...state, pagination};
+    }
   }
 }
 

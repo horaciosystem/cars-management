@@ -3,7 +3,8 @@ import reducer, {
   filterCars,
   createCar,
   updateCar,
-  removeCar
+  removeCar,
+  getPaginatedItems
 } from '../cars-reducer';
 
 import {
@@ -17,15 +18,62 @@ import {
 import initialCarsState, { manyCars, pageOne } from '../../fixtures/cars-fixture';
 
 const initialState = {
-  filterFunction: null,
-  cars: initialCarsState
+  filterFunction: null, 
+  cars: initialCarsState, 
+  pagination: {
+		page: 1,
+		perPage: 5,
+		total: 3,
+		totalPages: 1,
+		data: initialCarsState
+	}
 };
+
+const MANY_CARS = {
+  filterFunction: null,
+  cars: manyCars,
+  pagination: {
+		page: 1,
+		perPage: 5,
+		total: 15,
+		totalPages: 4,
+		data: manyCars
+	}
+}
 
 describe('CarList reducer', () => {
   it('should return the initial state', () => {
     expect(
       reducer(undefined, {})
     ).toEqual(initialState)
+  });
+
+  it('should handle LOAD', () => {
+    const newState = reducer(initialState, loadCars());
+    expect(newState).toEqual(initialState);    
+  });
+
+  it('should handle LOAD with pagination', () => {
+    const newState = reducer(MANY_CARS, loadCars());
+    expect(newState.pagination.data.length).toEqual(5);    
+    expect(newState.pagination)
+      .toEqual(
+      {
+        page: 1,
+        perPage: 5,
+        total: 16,
+        totalPages: 4,
+        data: pageOne
+	    }
+    );    
+  });
+
+  it('should handle LOAD with pagination - page 2', () => {
+    const newState = reducer(MANY_CARS, loadCars(2));
+    expect(newState.pagination.data.length).toEqual(5);    
+    const paginatedItems = newState.pagination.data;
+    expect(paginatedItems[0].id).toEqual(6);    
+    expect(paginatedItems[4].id).toEqual(10);    
   });
 
   it('should handle CREATE', () => {
@@ -48,8 +96,26 @@ describe('CarList reducer', () => {
     };
 
     const newState = reducer(initialState, createCar(carToAdd));
-    expect(newState.cars).toEqual([...initialState.cars, expectedCar]);
+    expect(newState.pagination.data).toEqual([...initialState.pagination.data, expectedCar]);
     expect(newState.cars.pop()).toEqual(expectedCar);
+  });
+
+  it('should handle CREATE and return the pagination', () => {
+    const carToAdd = { 
+      combustivel: 'Flex',
+      imagem: null,
+      marca: 'Fiat',
+      modelo: 'Palio',
+      placa: 'MFH-5577',
+      valor: '23.500'
+    };
+    const newStateOne = reducer(initialState, createCar(carToAdd));
+    const newStateTwo = reducer(newStateOne, createCar(carToAdd));
+    const newStateThree = reducer(newStateTwo, createCar(carToAdd));
+    
+    expect(newStateThree.pagination.data.length).toEqual(5);    
+    expect(newStateThree.pagination.total).toEqual(6);
+    expect(newStateThree.pagination.totalPages).toEqual(2);
   });
 
   it('should handle UPDATE', () => {
@@ -76,103 +142,166 @@ describe('CarList reducer', () => {
     ).toBe(false);
   });
 
+  it('should handle REMOVE', () => {
+    const newState = reducer(MANY_CARS, removeCar(3));        
+    expect(newState.pagination.data.length).toEqual(5);    
+    expect(newState.pagination.total).toEqual(15);
+    expect(newState.pagination.totalPages).toEqual(3);
+  });
+
   it('should not change the state when REMOVE an inexistent car', () => {
     expect(
         reducer(initialState, removeCar(14234))          
     ).toEqual(initialState);
   });
 
-
   it('should FILTER cars by fuel', () => {
     const query = 'flex';
     const newState = reducer(MANY_CARS, filterCars(query));
-    const {filterFunction, cars} = newState;
-    expect(
-      filterFunction(cars).length
-    ).toEqual(5)
+    const {cars, pagination} = newState;
+    expect(pagination.data.length).toEqual(5);
   });
 
   it('should FILTER cars by fuel partial description', () => {
     const query = 'fl';
     const newState = reducer(MANY_CARS, filterCars(query));
-    const {filterFunction, cars} = newState;
+    const {pagination, cars} = newState;
     expect(
-      filterFunction(cars).length
+      pagination.data.length
     ).toEqual(5)
   });
 
   it('should FILTER cars by brand Volkswagem', () => {
     const query = 'volkswagem';
+    const newState = reducer(MANY_CARS, filterCars(query));
+    const {pagination, cars} = newState;
     expect(
-      reducer(MANY_CARS, filterCars(query)).length
+      pagination.data.length
     ).toEqual(4)
   });
 
+  it('should FILTER cars by brand Volkswagen', () => {
+    const query = 'volkswagen';
+    const newState = reducer(MANY_CARS, filterCars(query));
+    const {pagination, cars} = newState;
+    expect(
+      pagination.data.length
+    ).toEqual(5)
+  });
+
+  it('should FILTER cars by brand partial description', () => {
+    const query = 'volks';
+    const newState = reducer(MANY_CARS, filterCars(query));
+    const {pagination, cars} = newState;
+    expect(
+      pagination.total
+    ).toEqual(9)
+  });
+
+  it('should FILTER cars by fuel and brand', () => {
+    const query = 'flex volkswagem';
+    const newState = reducer(MANY_CARS, filterCars(query));
+    const {pagination, cars} = newState;
+    expect(
+      pagination.data.length
+    ).toEqual(1)
+  });
+
+  it('should FILTER cars by brand and fuel', () => {
+    const query = 'volkswagem flex';
+    const newState = reducer(MANY_CARS, filterCars(query));
+    const {pagination, cars} = newState;
+    expect(
+      pagination.data.length
+    ).toEqual(1)
+  });
+  
+
+  it('should FILTER cars by fuel partial decription and brand', () => {
+    const query = 'gas volkswagem';
+    const newState = reducer(MANY_CARS, filterCars(query));
+    const {pagination, cars} = newState;
+    expect(
+      pagination.data.length
+    ).toEqual(2)
+  });
+
+  it('should FILTER cars by fuel and brand partial description', () => {
+    const query = 'gasolina volks';
+    const newState = reducer(MANY_CARS, filterCars(query));
+    const {pagination, cars} = newState;
+    expect(
+      pagination.data.length
+    ).toEqual(3)
+  });
+
+  it('should return the same state when FILTER with an empty query', () => {
+    const query = '';
+    const newState = reducer(MANY_CARS, filterCars(query));
+    const {filterFunction, cars} = newState;
+    expect(cars).toEqual(MANY_CARS.cars);
+  });
+
+
 });
 
-const MANY_CARS = {
-  filterFunction: null,
-  cars: manyCars
-}
+describe('Pagination function', () => {
+  it('should return the first 5 items', () => {
+    expect(
+      getPaginatedItems(manyCars)
+    ).toEqual({
+      page: 1,
+      perPage: 5,
+      total: 16,
+      totalPages: 4,
+      data: pageOne
+    })    
+  });
 
-describe('Filter functions', () => {
+  it('should return from item 5 to 10', () => {
+    const result = getPaginatedItems(manyCars, 2)
+    expect(
+      result
+    ).toEqual({
+      page: 2,
+      perPage: 5,
+      total: 16,
+      totalPages: 4,
+      data: manyCars.slice(5, 10)
+    })    
+    expect(result.data.length).toEqual(5);
+    expect(result.data[0].id).toEqual(6);
+  });
 
+  it('should return from item 10 to 5', () => {
+    const result = getPaginatedItems(manyCars, 3)
+    expect(
+      result
+    ).toEqual({
+      page: 3,
+      perPage: 5,
+      total: 16,
+      totalPages: 4,
+      data: manyCars.slice(10, 15)
+    })
+    expect(result.data[0].id).toEqual(11);    
+  });
 
-  
-  
+  it('should return only the item ID 16', () => {
+    const result = getPaginatedItems(manyCars, 4)
+    expect(
+      result
+    ).toEqual({
+      page: 4,
+      perPage: 5,
+      total: 16,
+      totalPages: 4,
+      data: manyCars.slice(15, manyCars.length)
+    })
+    expect(result.data[0].id).toEqual(16);    
+  });
 
-
-
-  // it('should FILTER cars by brand Volkswagen', () => {
-  //   const query = 'volkswagen';
-  //   expect(
-  //     reducer(MANY_CARS, filterCars(query)).length
-  //   ).toEqual(5)
-  // });
-
-  // it('should FILTER cars by brand partial description', () => {
-  //   const query = 'volks';
-  //   expect(
-  //     reducer(MANY_CARS, filterCars(query)).length
-  //   ).toEqual(9)
-  // });
-
-  // it('should FILTER cars by fuel and brand', () => {
-  //   const query = 'flex volkswagem';
-  //   expect(
-  //     reducer(MANY_CARS, filterCars(query)).length
-  //   ).toEqual(1)
-  // });
-
-  // it('should FILTER cars by brand and fuel', () => {
-  //   const query = 'volkswagem flex';
-  //   expect(
-  //     reducer(MANY_CARS, filterCars(query)).length
-  //   ).toEqual(1)
-  // });
-  
-  // it('should FILTER cars by fuel partial decription and brand', () => {
-  //   const query = 'gas volkswagem';
-  //   expect(
-  //     reducer(MANY_CARS, filterCars(query)).length
-  //   ).toEqual(2)
-  // });
-
-  // it('should FILTER cars by fuel and brand partial description', () => {
-  //   const query = 'gasolina volks';
-  //   expect(
-  //     reducer(MANY_CARS, filterCars(query)).length
-  //   ).toEqual(3)
-  // });
-
-  // it('should return the same state when FILTER with an empty query', () => {
-  //   const query = '';
-  //   expect(
-  //     reducer(MANY_CARS, filterCars(query))
-  //   ).toEqual(MANY_CARS)
-  // });
-})
-
+});
 
 describe('CarList actions reducer', () => {
 
