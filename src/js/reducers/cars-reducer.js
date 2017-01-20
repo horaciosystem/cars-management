@@ -22,9 +22,8 @@ export function getPaginatedItems(items, page = 1) {
 	};
 }
 
-const initialState = {
-  filterFunction: null,
-  cars: manyCars  
+const initialState = {    
+  cars: manyCars
 }
 
 function filterFunction(filters, items) {
@@ -38,15 +37,20 @@ function filterFunction(filters, items) {
 }
 
 export default function reducer(state = initialState, action = {}) {
-  switch (action.type) {
+  switch (action.type) {    
     case FILTER: {      
       const filters = extractFiltersFromQuery(action.query);         
       const filteredCars = filterFunction(filters, state.cars);
-      const pagination = getPaginatedItems(filteredCars);
-      return {...state, pagination};
+      const pagination = getPaginatedItems(filteredCars, action.page);
+      return {...state, pagination, filters};
     }
     case LOAD:
-      const pagination = getPaginatedItems(state.cars, action.page);
+      let filteredCars = state.cars;
+      const filters = state.filters;
+      if (filters) {
+        filteredCars = filterFunction(filters, state.cars);
+      }
+      const pagination = getPaginatedItems(filteredCars, action.page);
       return {...state, pagination};      
     case REMOVE: {
       const cars = state.cars.filter(car => car.id !== action.id);
