@@ -10,7 +10,7 @@ export default class CarListItem extends Component {
     } = car;
 
     return(
-      <tr className="foo">
+      <tr>
         <td>{placa}</td>
         <td>{modelo}</td>
         <td>{marca}</td>
