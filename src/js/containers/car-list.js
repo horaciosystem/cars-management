@@ -12,7 +12,7 @@ export class CarList extends Component {
 		render() {			
 			return ( 
 				<div className="car-list">
-					<table className="table is-bordered">
+					<table className="table is-narrow">
             <thead>
 							<tr>
 								<th className="table-header">Placa</th>

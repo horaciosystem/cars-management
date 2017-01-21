@@ -46,17 +46,22 @@ body {
 
 .car-list {  
   width: 70%;
-  min-height: 250px;
+  min-height: 290px;
 }
 
-.car-list-item:hover > td {
+.car-list-item:hover td {
   background-color: #D8E9FB;
+  border-color: #8BC8F6;
   cursor: pointer;
 }
 
 .modal-header {
   display: flex;
   justify-content: space-between;
+}
+
+.modal-card-head {
+  background-color: #F8FAFC;
 }
 
 select,
@@ -72,4 +77,31 @@ select,
 
 .table-header {
   background: #F8FAFC;
+}
+
+.table {
+  margin-bottom: 0px;
+}
+
+.table tr {
+  border: 1px solid #dbdbdb;
+}
+
+.table tbody {
+  line-height: 2.8;
+}
+
+.table thead {
+  line-height: 2;
+}
+
+.button.is-medium,
+.input.is-medium {
+  font-size: 1.10rem;
+}
+
+.pagination-link.is-current {
+  background-color: #D8E9FB;
+  border-color: #8BC8F6;
+  color: black;
 }

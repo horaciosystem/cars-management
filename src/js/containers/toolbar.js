@@ -27,7 +27,7 @@ export class Toolbar extends Component {
 				<div className="toolbar">
 					<div>					
 						<button 
-							className="button is-primary"
+							className="button is-medium is-success"
 							onClick={() => this.props.toogleModal(null)}
 						>
 							Novo Carro
@@ -35,7 +35,7 @@ export class Toolbar extends Component {
 					</div>
 					<div>
 						<input 
-							className="input" 
+							className="input is-medium" 
 							type="text" 
 							placeholder="Pesquisar" 
 							value={this.state.searchValue}

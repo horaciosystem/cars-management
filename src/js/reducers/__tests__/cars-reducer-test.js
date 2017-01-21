@@ -248,11 +248,12 @@ describe('CarList reducer', () => {
     ).toEqual(3)
   });
 
-  it('should return the same state when FILTER with an empty query', () => {
+  fit('should return the same state when FILTER with an empty query', () => {
     const query = '';
     const newState = reducer(MANY_CARS, filterCars(query));
-    const {filterFunction, cars} = newState;
+    const {filters, cars} = newState;
     expect(cars).toEqual(MANY_CARS.cars);
+    expect(filters).toEqual(['']);
   });
 
 

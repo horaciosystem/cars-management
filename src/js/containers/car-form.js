@@ -88,7 +88,7 @@ class CarForm extends Component {
               <div className="column is-12 notification is-danger">
                 {error}
               </div>
-          </div>
+            </div>
           }
           <div className="columns">
             <div className="column is-4">
