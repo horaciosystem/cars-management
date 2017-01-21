@@ -1,4 +1,6 @@
 @charset 'utf-8';
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,300,400,700);
+$family-primary: 'Open Sans';
 @import '~bulma/bulma';
 
 html,
@@ -9,6 +11,7 @@ body {
   justify-content: center;
   width: 100%;
 }
+
 
 #root {
   width: 100%;
@@ -40,6 +43,11 @@ body {
 
 .toolbar {  
   width: 70%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-buttons {  
   display: flex;
   justify-content: space-between;
 }
@@ -95,6 +103,19 @@ select,
   line-height: 2;
 }
 
+.table thead td, 
+.table thead th {
+  border-width: 0px;
+}
+
+a {
+  color: #3A92EB;
+}
+
+button {
+  font-family: $family-primary;
+}
+
 .button.is-medium,
 .input.is-medium {
   font-size: 1.10rem;
@@ -104,4 +125,8 @@ select,
   background-color: #D8E9FB;
   border-color: #8BC8F6;
   color: black;
+}
+
+.modal-card-head > * {
+  margin-right: 10px;
 }

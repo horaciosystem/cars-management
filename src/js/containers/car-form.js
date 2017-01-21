@@ -47,6 +47,7 @@ const customStyles = {
     left                  : '20%',
     right                 : '20%',
     bottom                : '10%',
+    padding               : 0,
   }
 };
 
@@ -73,11 +74,11 @@ class CarForm extends Component {
           onSubmit={handleSubmit}          
         >
         <header className="modal-card-head">
-          <p className="modal-card-title">{ title }</p>
-          <button type="submit" className="button is-primary save-button">
+          <p className="modal-card-title">{ title }</p>          
+          <button type="submit" className="button is-info is-medium">
             Salvar
           </button>
-          <a className="button is-primary is-inverted"
+          <a className="button is-medium"
             onClick={toogleModal}>
             Cancel
           </a>
