@@ -14,6 +14,15 @@ const renderInput = field => {
 };
 
 const upper = value => value && value.toUpperCase();
+const licensePlate = (value, previousValue) => {
+  let newValue = upper(value);
+  if (!previousValue || newValue.length > previousValue.length) {
+    if (newValue.length === 3) {
+      return newValue + '-';
+    }
+  }
+  return newValue;
+}
 
 const validate = values => {
   const errors = {}
@@ -94,7 +103,7 @@ class CarForm extends Component {
           <div className="columns">
             <div className="column is-4">
               <label htmlFor="placa" className="label">Placa</label>
-              <Field name="placa" component={renderInput} type="text" normalize={upper} />
+              <Field name="placa" component={renderInput} type="text" normalize={licensePlate} />
             </div>
             <div className="column is-4">
               <label htmlFor="marca" className="label">Marca</label>

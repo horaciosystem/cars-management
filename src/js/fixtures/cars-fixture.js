@@ -1,4 +1,4 @@
-const initialState = [ 
+const initialCarsState = [ 
   { 
     id: 1,
     combustivel: 'Flex',
@@ -28,7 +28,7 @@ const initialState = [
   }
 ];
 
-export default initialState;
+export default initialCarsState;
 
 
 const manyCars = [ 

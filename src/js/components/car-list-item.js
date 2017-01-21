@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CarImageLink from './car-image-link';
+import { currency } from '../utils';
 
 export default class CarListItem extends Component {
   render() {
@@ -18,7 +19,7 @@ export default class CarListItem extends Component {
           <CarImageLink image={imagem} />
         </td>
         <td>{combustivel}</td>
-        <td>{valor}</td>
+        <td>{currency(valor)}</td>
         <td>
           <div className="car-item-buttons">
             <a onClick={() => onEdit(car)}>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { loadCars } from '../reducers/cars-reducer';
 import CarListItem from '../components/car-list-item';
 
 export class CarList extends Component {
@@ -51,8 +50,4 @@ const mapStateToProps = (state) => {
   };
 }
 
-const mapDispatchToProps = dispatch => ({
-   loadCars: bindActionCreators(loadCars, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(CarList);
+export default connect(mapStateToProps)(CarList);

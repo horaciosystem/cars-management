@@ -3,7 +3,7 @@ import CarList from './car-list';
 import ToolBar from './toolbar';
 import MainHeader from '../components/main-header';
 import CarForm from './car-form';
-import Pagination from '../components/pagination';
+import Pagination from './pagination';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {  
@@ -35,11 +35,11 @@ export class App extends Component {
         modalIsOpen: !prevState.modalIsOpen,
         carToUpdate: car
       }
-    })
+    });
   }
 
   onCreateCar(car) {
-    this.props.createCar(car);
+    this.props.createCar(car, 3);
     this.handleToogleModal(null);
   }
 
@@ -50,10 +50,6 @@ export class App extends Component {
 
   onDeleteCar(carId) {
     this.props.removeCar(carId);    
-  }
-
-  navigateToPage(page) {
-    this.props.loadCars(page);
   }
 
   render() {
@@ -68,13 +64,8 @@ export class App extends Component {
         <CarList 
           toogleModal={this.handleToogleModal}
           onDelete={this.onDeleteCar}
-        />
-        {this.props.carsState.pagination.data.length > 0 &&
-          <Pagination 
-            carsState={this.props.carsState}
-            loadCars={(foo) => this.navigateToPage(foo)}
-          />
-        }
+        />        
+        <Pagination />
         {this.state.modalIsOpen &&
           <CarForm
             title={carToUpdate ? 'Editar Veículo' : 'Cadastrar Veículo'}
@@ -89,12 +80,6 @@ export class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    carsState: state.cars
-  };
-}
-
 const mapDispatchToProps = dispatch => ({
    createCar: bindActionCreators(createCar, dispatch),
    updateCar: bindActionCreators(updateCar, dispatch),
@@ -103,4 +88,4 @@ const mapDispatchToProps = dispatch => ({
    filterCars: bindActionCreators(filterCars, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);

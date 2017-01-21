@@ -17,17 +17,17 @@ import {
 
 import initialCarsState, { manyCars, pageOne } from '../../fixtures/cars-fixture';
 
-const initialState = {
-  filters: null, 
-  cars: initialCarsState, 
+const initialState = {    
+  cars: initialCarsState,
+  filters: null,
   pagination: {
 		page: 1,
 		perPage: 5,
 		total: 3,
 		totalPages: 1,
 		data: initialCarsState
-	}
-};
+  }
+}
 
 const MANY_CARS = {
   filters: null,
@@ -46,6 +46,25 @@ describe('CarList reducer', () => {
     expect(
       reducer(undefined, {})
     ).toEqual(initialState)
+  });
+
+  it('should return initial page 1 when handle DEFAULT with initial state', () => {
+    let stateOne = reducer(initialState, {});
+    expect(stateOne).toEqual(initialState);
+    expect(stateOne.pagination.page).toEqual(1);
+  })
+
+  it('should return the current page when handle DEFAULT', () => {
+    
+
+    let stateTwo = reducer({...MANY_CARS, pagination: {
+        page: 3,
+        perPage: 5,
+        total: 15,
+        totalPages: 4,
+        data: initialCarsState
+      }}, {});
+    expect(stateTwo.pagination.page).toEqual(3);
   });
 
   it('should handle LOAD', () => {
@@ -98,6 +117,30 @@ describe('CarList reducer', () => {
     const newState = reducer(initialState, createCar(carToAdd));
     expect(newState.pagination.data).toEqual([...initialState.pagination.data, expectedCar]);
     expect(newState.cars.pop()).toEqual(expectedCar);
+  });
+
+  it('should CREATE a car with ID incresed by the last', () => {
+    const carToAdd = { 
+      combustivel: 'Flex',
+      imagem: null,
+      marca: 'Fiat',
+      modelo: 'Palio',
+      placa: 'MFH-5577',
+      valor: '23.500'
+    };
+    const expectedCar = { 
+      id: 4,
+      combustivel: 'Flex',
+      imagem: null,
+      marca: 'Fiat',
+      modelo: 'Palio',
+      placa: 'MFH-5577',
+      valor: '23.500'
+    };
+
+    const newState = reducer(MANY_CARS, createCar(carToAdd));    
+    const lastCar = newState.cars.pop();
+    expect(lastCar.id).toEqual(17);
   });
 
   it('should handle CREATE and return the pagination', () => {
@@ -248,7 +291,7 @@ describe('CarList reducer', () => {
     ).toEqual(3)
   });
 
-  fit('should return the same state when FILTER with an empty query', () => {
+  it('should return the same state when FILTER with an empty query', () => {
     const query = '';
     const newState = reducer(MANY_CARS, filterCars(query));
     const {filters, cars} = newState;
@@ -262,14 +305,8 @@ describe('CarList reducer', () => {
 describe('Pagination function', () => {
   it('should return the first 5 items', () => {
     expect(
-      getPaginatedItems(manyCars)
-    ).toEqual({
-      page: 1,
-      perPage: 5,
-      total: 16,
-      totalPages: 4,
-      data: pageOne
-    })    
+      getPaginatedItems(manyCars).data.length
+    ).toEqual(5);
   });
 
   it('should return from item 5 to 10', () => {
