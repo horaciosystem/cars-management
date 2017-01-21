@@ -71,7 +71,7 @@ class CarForm extends Component {
   }
 
   render() {
-    const { title, initialValues, toogleModal, handleSubmit, modalIsOpen, error } = this.props;
+    const { title, initialValues, toogleModal, handleSubmit, modalIsOpen } = this.props;
     return (
       <Modal
         isOpen={modalIsOpen}
@@ -93,13 +93,6 @@ class CarForm extends Component {
           </a>
         </header>
         <section className="modal-card-body">
-          {error &&
-            <div className="columns">
-              <div className="column is-12 notification is-danger">
-                {error}
-              </div>
-            </div>
-          }
           <div className="columns">
             <div className="column is-4">
               <label htmlFor="placa" className="label">Placa</label>

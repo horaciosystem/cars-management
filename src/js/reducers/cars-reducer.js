@@ -105,8 +105,8 @@ export function loadCars(page) {
   return { type: LOAD, page };
 }
 
-export function createCar(car, page) {
-  return { type: CREATE, car, page };
+export function createCar(car) {
+  return { type: CREATE, car };
 }
 
 export function updateCar(car) {

@@ -39,7 +39,7 @@ export class App extends Component {
   }
 
   onCreateCar(car) {
-    this.props.createCar(car, 3);
+    this.props.createCar(car);
     this.handleToogleModal(null);
   }
 
