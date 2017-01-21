@@ -18,7 +18,7 @@ import {
 import initialCarsState, { manyCars, pageOne } from '../../fixtures/cars-fixture';
 
 const initialState = {
-  filterFunction: null, 
+  filters: null, 
   cars: initialCarsState, 
   pagination: {
 		page: 1,
@@ -30,7 +30,7 @@ const initialState = {
 };
 
 const MANY_CARS = {
-  filterFunction: null,
+  filters: null,
   cars: manyCars,
   pagination: {
 		page: 1,
@@ -133,6 +133,19 @@ describe('CarList reducer', () => {
         reducer(initialState, updateCar(car)).cars
           .find(car => car.id === 2)
     ).toEqual(car);
+  });
+
+  fit('should keep the updated car in the same state position', () => {
+    const car = {
+      id: 2,
+      combustivel: 'Gasolina',      
+      valor: '15.000'
+    };
+    
+    const originalIndex = MANY_CARS.pagination.data.findIndex(car => car.id === 2);    
+    const newState = reducer(MANY_CARS, updateCar(car));
+    expect(newState.pagination.data.find(car => car.id === 2).valor).toEqual('15.000');
+    expect(newState.pagination.data.findIndex(car => car.id === 2)).toEqual(originalIndex);
   });
 
   it('should handle REMOVE', () => {

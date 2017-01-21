@@ -66,9 +66,12 @@ export default function reducer(state = initialState, action = {}) {
       return {...state, cars, pagination};
     }
     case UPDATE: {
-      const filteredCars = state.cars.filter(car => car.id !== action.car.id);
-      const cars = [...filteredCars, action.car];
-      return {...state, cars};
+      const originalIndex =  state.cars.findIndex(car => car.id === action.car.id);
+      let carToUpdate = state.cars.find(car => car.id === action.car.id);
+      const updatedCar = {...carToUpdate, ...action.car};
+      state.cars[originalIndex] = updatedCar;      
+      const pagination = getPaginatedItems(state.cars);
+      return {...state, pagination};
     }
     default: {     
       const pagination = getPaginatedItems(state.cars);
