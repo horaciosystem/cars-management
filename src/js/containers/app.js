@@ -45,7 +45,7 @@ export class App extends Component {
 
   onUpdateCar(car) {
     this.props.updateCar(car);
-    this.hadleToogleModal(null);
+    this.handleToogleModal(null);
   }
 
   onDeleteCar(carId) {

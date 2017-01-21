@@ -135,7 +135,7 @@ describe('CarList reducer', () => {
     ).toEqual(car);
   });
 
-  fit('should keep the updated car in the same state position', () => {
+  it('should keep the updated car in the same state position', () => {
     const car = {
       id: 2,
       combustivel: 'Gasolina',      

@@ -5,6 +5,13 @@ html,
 body {
   background-color: #F1F4F9;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+#root {
+  width: 100%;
 }
 
 .main-container {
@@ -18,7 +25,6 @@ body {
   flex-flow: column;    
   text-align: center;
   align-items: center; 
-  height: 100%;
 }
 
 .main-container > * {
@@ -29,18 +35,23 @@ body {
 .header {
   background: #2687E9;
   text-align: left;
-  width: 85%;
+  width: 75%;
 }
 
 .toolbar {  
-  width: 80%;
+  width: 70%;
   display: flex;
   justify-content: space-between;
 }
 
 .car-list {  
-  width: 80%;
+  width: 70%;
   min-height: 250px;
+}
+
+.car-list-item:hover > td {
+  background-color: #D8E9FB;
+  cursor: pointer;
 }
 
 .modal-header {
