@@ -244,11 +244,36 @@ describe('CarList reducer', () => {
     expect(newState.pagination.totalPages).toEqual(3);
   });
 
+  it('should return the same page after REMOVE', () => {
+    const newState = reducer({...MANY_CARS, pagination: {
+      page: 2,
+      perPage: 5,
+      total: 15,
+      totalPages: 4,
+      data: manyCars
+    }}, removeCar(7));
+    expect(newState.pagination.page).toEqual(2);
+  });
+
   it('should not change the state when REMOVE an inexistent car', () => {
     expect(
         reducer(initialState, removeCar(14234))          
     ).toEqual(initialState);
   });
+
+  it('should return the previous page when REMOVE the last car of the page', () => {
+    const newState = reducer({...MANY_CARS, pagination: {
+      page: 4,
+      perPage: 5,
+      total: 15,
+      totalPages: 4,
+      data: manyCars
+    }}, removeCar(16));
+
+    expect(newState.pagination.page).toEqual(3);
+    expect(newState.pagination.totalPages).toEqual(3);
+  });
+
 
   it('should FILTER cars by fuel', () => {
     const query = 'flex';
@@ -387,8 +412,17 @@ describe('Pagination function', () => {
       total: 16,
       totalPages: 4,
       data: manyCars.slice(15, manyCars.length)
-    })
+    });
     expect(result.data[0].id).toEqual(16);    
+  });
+
+  it('should return the next page with items', () => {
+    manyCars.pop();
+    const pagination = getPaginatedItems(manyCars, 4);
+    expect(pagination.page).toEqual(3);
+
+    const items = pagination.data;
+    expect(items.pop().id).toEqual(15);
   });
 
 });

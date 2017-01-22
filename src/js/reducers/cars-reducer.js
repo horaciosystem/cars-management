@@ -8,20 +8,26 @@ export const FILTER = 'FILTER';
 
 let NEXT_ID = null;
 
+
 export function getPaginatedItems(items, page = 1) {
-  const per_page = 5;
+  const perPage = 5;
   let offset = 0;
   let paginatedItems = [];
+  let totalPages = 1;
   if (items && items.length > 0 ) {
-    offset = (page - 1) * per_page;
-    paginatedItems = items.slice(offset, offset + per_page);
-  }
-      
+    totalPages = Math.ceil(items.length / perPage);
+    if (totalPages < page) {
+      return getPaginatedItems(items, page -1);
+    } else {
+      offset = (page - 1) * perPage;
+      paginatedItems = items.slice(offset, offset + perPage);
+    }
+  }  
 	return {
-		page: page,
-		perPage: per_page,
+    page: page,
+		perPage: perPage,
 		total: items.length,
-		totalPages: Math.ceil(items.length / per_page),
+		totalPages: totalPages,
 		data: paginatedItems
 	};
 }
@@ -66,7 +72,7 @@ export default function reducer(state = initialState, action = {}) {
       return {...state, pagination};      
     case REMOVE: {
       const cars = state.cars.filter(car => car.id !== action.id);
-      const pagination = getPaginatedItems(cars);      
+      const pagination = getPaginatedItems(cars, state.pagination.page);
       return {...state, cars, pagination};
     }
     case CREATE: {      
