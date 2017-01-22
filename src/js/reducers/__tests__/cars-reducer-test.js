@@ -55,8 +55,6 @@ describe('CarList reducer', () => {
   })
 
   it('should return the current page when handle DEFAULT', () => {
-    
-
     let stateTwo = reducer({...MANY_CARS, pagination: {
         page: 3,
         perPage: 5,
@@ -161,6 +159,27 @@ describe('CarList reducer', () => {
     expect(newStateThree.pagination.totalPages).toEqual(2);
   });
 
+  it('should return the same page after CREATE', () => {
+    const car = {
+      id: 12,
+      combustivel: 'Nuclear',
+      imagem: null,
+      marca: 'Delorean',
+      modelo: 'DMC-12',
+      placa: 'OCT-2015',
+      valor: '28.000'
+    };
+    const newState = reducer({...MANY_CARS, pagination: {
+      page: 3,
+      perPage: 5,
+      total: 16,
+      totalPages: 4,
+      data: manyCars
+    }}, createCar(car));
+    expect(newState.pagination.page).toEqual(3);
+    expect(newState.pagination.total).toEqual(17);
+  });
+
   it('should handle UPDATE', () => {
     const car = {
       id: 2,
@@ -178,7 +197,7 @@ describe('CarList reducer', () => {
     ).toEqual(car);
   });
 
-  it('should keep the updated car in the same state position', () => {
+  it('should keep the UPDATED car in the same state position', () => {
     const car = {
       id: 2,
       combustivel: 'Gasolina',      
@@ -189,6 +208,26 @@ describe('CarList reducer', () => {
     const newState = reducer(MANY_CARS, updateCar(car));
     expect(newState.pagination.data.find(car => car.id === 2).valor).toEqual('15.000');
     expect(newState.pagination.data.findIndex(car => car.id === 2)).toEqual(originalIndex);
+  });
+
+  it('should return the same page after UPDATE', () => {
+    const car = {
+      id: 12,
+      combustivel: 'Nuclear',
+      imagem: null,
+      marca: 'Delorean',
+      modelo: 'DMC-12',
+      placa: 'OCT-2015',
+      valor: '28.000'
+    };
+    const newState = reducer({...MANY_CARS, pagination: {
+      page: 3,
+      perPage: 5,
+      total: 15,
+      totalPages: 4,
+      data: manyCars
+    }}, updateCar(car));
+    expect(newState.pagination.page).toEqual(3);
   });
 
   it('should handle REMOVE', () => {

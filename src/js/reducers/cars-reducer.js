@@ -70,19 +70,18 @@ export default function reducer(state = initialState, action = {}) {
       return {...state, cars, pagination};
     }
     case CREATE: {      
-      NEXT_ID = state.cars && state.cars.length + 1;
+      NEXT_ID = (state.cars && state.cars.length + 1) || 1;
       const newCar = {...action.car, id: NEXT_ID};      
       const cars = [...state.cars, newCar];      
-      const pagination = getPaginatedItems(cars, action.page);
+      const pagination = getPaginatedItems(cars, state.pagination.page);
       return {...state, cars, pagination};
     }
     case UPDATE: {
       const originalIndex =  state.cars.findIndex(car => car.id === action.car.id);
       let carToUpdate = state.cars.find(car => car.id === action.car.id);
       const updatedCar = {...carToUpdate, ...action.car};
-      state.cars[originalIndex] = updatedCar;      
-      const pagination = getPaginatedItems(state.cars);
-      return {...state, pagination};
+      state.cars[originalIndex] = updatedCar;
+      return state;
     }
     default: {     
       const cars = state.cars || [];
