@@ -62,6 +62,15 @@ export default function reducer(state = initialState, action = {}) {
   }
 }
 
+/**
+ * Function that paginates the items in 5 items per page.
+ * returns an object with:
+ * * page: the actual page;
+ * * perPage: the number of items per page;
+ * * total: total of the items;
+ * * totalPages: the total number of the pages for all items
+ * * data: An array with the items of the current page.
+ */
 export function getPaginatedItems(items, page = 1) {
   const perPage = 5;
   let offset = 0;
@@ -85,6 +94,11 @@ export function getPaginatedItems(items, page = 1) {
 	};
 }
 
+/**
+* Function that applies filters in all items. 
+* It pass forward the result of each filter to apply the next one.
+* returns the an array of the accumulated items.
+ */
 function filterFunction(filters, items) {
   return filters.reduce((acc, filter) => {     
     let newItems = acc.filter(car => 
@@ -95,6 +109,11 @@ function filterFunction(filters, items) {
   }, items);
 }
 
+/**
+ * Function that splits the search string typed by the user
+ * to get the two first words
+ * and returns an array with these words.
+ */
 function extractFiltersFromQuery(query) {
   const listFilters = query.split(' ');
   return listFilters.slice(0, 2);
