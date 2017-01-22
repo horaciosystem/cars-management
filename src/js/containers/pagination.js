@@ -38,14 +38,8 @@ class Pagination extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    carsState: state.cars
-  };
-}
-
 const mapDispatchToProps = dispatch => ({
    loadCars: bindActionCreators(loadCars, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Pagination);
+export default connect(null, mapDispatchToProps)(Pagination);

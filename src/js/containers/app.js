@@ -65,7 +65,11 @@ export class App extends Component {
           toogleModal={this.handleToogleModal}
           onDelete={this.onDeleteCar}
         />        
-        <Pagination />
+        {this.props.carsState.pagination.totalPages > 1 &&
+          <Pagination 
+            carsState={this.props.carsState}
+          />
+        }
         {this.state.modalIsOpen &&
           <CarForm
             title={carToUpdate ? 'Editar Veículo' : 'Cadastrar Veículo'}
@@ -80,6 +84,12 @@ export class App extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    carsState: state.cars
+  };
+}
+
 const mapDispatchToProps = dispatch => ({
    createCar: bindActionCreators(createCar, dispatch),
    updateCar: bindActionCreators(updateCar, dispatch),
@@ -88,4 +98,4 @@ const mapDispatchToProps = dispatch => ({
    filterCars: bindActionCreators(filterCars, dispatch),
 });
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
