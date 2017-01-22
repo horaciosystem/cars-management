@@ -1,5 +1,4 @@
 import initialStateCars, { manyCars } from '../fixtures/cars-fixture';
-import rest from 'lodash/fp/rest';
 export const LOAD   = 'LOAD';
 export const CREATE = 'CREATE';
 export const UPDATE = 'UPDATE';
@@ -7,30 +6,6 @@ export const REMOVE = 'REMOVE';
 export const FILTER = 'FILTER';
 
 let NEXT_ID = null;
-
-
-export function getPaginatedItems(items, page = 1) {
-  const perPage = 5;
-  let offset = 0;
-  let paginatedItems = [];
-  let totalPages = 1;
-  if (items && items.length > 0 ) {
-    totalPages = Math.ceil(items.length / perPage);
-    if (totalPages < page) {
-      return getPaginatedItems(items, page -1);
-    } else {
-      offset = (page - 1) * perPage;
-      paginatedItems = items.slice(offset, offset + perPage);
-    }
-  }  
-	return {
-    page: page,
-		perPage: perPage,
-		total: items.length,
-		totalPages: totalPages,
-		data: paginatedItems
-	};
-}
 
 const initialState = {    
   cars: initialStateCars,
@@ -42,16 +17,6 @@ const initialState = {
 		totalPages: 1,
 		data: []
   }
-}
-
-function filterFunction(filters, items) {
-  return filters.reduce((acc, filter) => {     
-    let newItems = acc.filter(car => 
-      car.combustivel.toLowerCase().includes(filter.toLowerCase()) 
-        || car.marca.toLowerCase().includes(filter.toLowerCase())
-    );
-    return acc = newItems;
-  }, items);
 }
 
 export default function reducer(state = initialState, action = {}) {
@@ -95,6 +60,39 @@ export default function reducer(state = initialState, action = {}) {
       return {...state, pagination};
     }
   }
+}
+
+export function getPaginatedItems(items, page = 1) {
+  const perPage = 5;
+  let offset = 0;
+  let paginatedItems = [];
+  let totalPages = 1;
+  if (items && items.length > 0 ) {
+    totalPages = Math.ceil(items.length / perPage);
+    if (totalPages < page) {
+      return getPaginatedItems(items, page -1);
+    } else {
+      offset = (page - 1) * perPage;
+      paginatedItems = items.slice(offset, offset + perPage);
+    }
+  }  
+	return {
+    page: page,
+		perPage: perPage,
+		total: items.length,
+		totalPages: totalPages,
+		data: paginatedItems
+	};
+}
+
+function filterFunction(filters, items) {
+  return filters.reduce((acc, filter) => {     
+    let newItems = acc.filter(car => 
+      car.combustivel.toLowerCase().includes(filter.toLowerCase()) 
+        || car.marca.toLowerCase().includes(filter.toLowerCase())
+    );
+    return acc = newItems;
+  }, items);
 }
 
 function extractFiltersFromQuery(query) {
