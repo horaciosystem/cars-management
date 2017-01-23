@@ -1,7 +1,7 @@
 {
   "name": "cars",
   "version": "1.0.0",
-  "description": "Gerenciamento de Veículos",
+  "description": "Cars Management",
   "scripts": {
     "start": "npm run clean && node server.js",
     "lint": "eslint src",
