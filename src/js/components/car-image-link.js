@@ -2,29 +2,16 @@ import React, { Component } from 'react';
 
 export default class CarImageLink extends Component {
   render() {        
-    let LinkComponent = null;
-    if (this.props.image) {
-      LinkComponent = (props) => <ImageLink image={props.image} />
-    } else {
-      LinkComponent = (props) => <NoImage />
-    }
+    const image = this.props.image;
      
     return (
-      <LinkComponent {...this.props} />
+      <div>
+        {image ? (
+          <a href={image}> Imagem </a>
+        ) : (
+          <p>Sem foto</p>
+        )}
+      </div>
     );
   }
-}
-
-function ImageLink(props) {
-  return (
-    <a href={props.image}>
-      Imagem
-    </a> 
-  );
-}
-
-function NoImage(props) {
-  return (
-    <p>Sem foto</p>
-  );
 }
