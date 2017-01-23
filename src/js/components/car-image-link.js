@@ -7,7 +7,7 @@ export default class CarImageLink extends Component {
     return (
       <div>
         {image ? (
-          <a href={image}> Imagem </a>
+          <a href={image} target="_blank"> Imagem </a>
         ) : (
           <p>Sem foto</p>
         )}
