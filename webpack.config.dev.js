@@ -1,5 +1,6 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
@@ -8,12 +9,16 @@ module.exports = {
     './src/js/index'
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/static/'
+    path: path.join(__dirname, 'build'),
+    filename: 'bundle.[hash].js'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+      inject: true,
+      filename: 'index.html',
+      template: './src/index-template.html'
+    })
   ],
   module: {
     loaders: [
@@ -32,6 +37,6 @@ module.exports = {
         test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
         loader: 'file-loader'
       }
-    ]
+    ]    
   }
 };

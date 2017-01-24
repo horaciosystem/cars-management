@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const CompressionPlugin = require('compression-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   cache: false,
@@ -8,9 +9,8 @@ module.exports = {
     './src/js/index'
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/static/'
+    path: path.join(__dirname, 'public'),
+    filename: 'bundle.[hash].js'
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -39,6 +39,11 @@ module.exports = {
       test: /\.js$|\.css$|\.html$/,
       threshold: 10240,
       minRatio: 0
+    }),
+    new HtmlWebpackPlugin({
+      inject: true,
+      filename: 'index.html',
+      template: './src/index-template.html'
     })
   ],
   module: {

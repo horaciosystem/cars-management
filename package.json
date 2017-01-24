@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "description": "Cars Management",
   "scripts": {
-    "start": "npm run clean && node server.js",
+    "build": "rm public/*; webpack --config webpack.config.prod.js --progress --colors",
+    "start": "node serverProd.js",
+    "start:dev": "rm public/*; node serverDev.js",
     "lint": "eslint src",
     "test": "jest",
-    "test:watch": "npm test -- --watch",
-    "build": "webpack --config webpack.config.prod.js",
-    "clean": "rimraf dist"
+    "test:watch": "npm test -- --watch"    
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "eslint": "^1.10.3",
     "eslint-plugin-react": "^3.6.2",
     "express": "^4.13.4",
+    "html-webpack-plugin": "^2.26.0",
     "jest": "^18.1.0",
     "node-sass": "^4.3.0",
     "react-hot-loader": "next",
@@ -44,6 +45,8 @@
   },
   "dependencies": {
     "bulma": "^0.3.1",
+    "compression": "^1.6.2",
+    "cors": "^2.8.1",
     "lodash": "^4.17.4",
     "react": "^15.2.0",
     "react-dom": "^15.2.0",
