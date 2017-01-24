@@ -4,12 +4,12 @@
   "description": "Cars Management",
   "scripts": {
     "build": "rm public/*; webpack --config webpack.config.prod.js --progress --colors",
-    "start": "npm run build && node serverProd.js",
+    "start": "node serverProd.js",
     "start:dev": "rm public/*; node serverDev.js",
     "lint": "eslint src",
     "test": "jest",
     "test:watch": "npm test -- --watch",
-    "heroku-postbuild": "npm install"
+    "heroku-postbuild": "npm run build"
   },
   "repository": {
     "type": "git",
