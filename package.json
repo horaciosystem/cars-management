@@ -8,8 +8,7 @@
     "start:dev": "rm public/*; node serverDev.js",
     "lint": "eslint src",
     "test": "jest",
-    "test:watch": "npm test -- --watch",
-    "heroku-postbuild": "npm run build"
+    "test:watch": "npm test -- --watch"
   },
   "repository": {
     "type": "git",
