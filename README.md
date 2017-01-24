@@ -45,5 +45,4 @@ yarn start
 or
 npm start
 ```
-It runs the *build* task and then run a express server
-You will then be able to access it at `localhost:3000`.
+It runs the *build* task and starts up a server at `localhost:5000`.
