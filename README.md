@@ -18,9 +18,9 @@ npm install
 ## Development
 Once the dependencies are installed, you can run:
 ```
-yarn start
+yarn start:dev
 or
-npm start
+npm run start:dev
 ```
 You will then be able to access it at `localhost:3000`.
 
@@ -39,9 +39,11 @@ npm test
 npm run test:watch
 ```
 
-## Production build
+## Production
 ```
-yarn build
+yarn start
 or
-npm run build
+npm start
 ```
+It runs the *build* task and then run a express server
+You will then be able to access it at `localhost:3000`.
