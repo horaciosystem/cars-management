@@ -4,13 +4,18 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  cache: false,
-  entry: [
-    './src/js/index'
-  ],
+  entry: {
+    app: './src/js/index',
+    vendor: [
+      'lodash', 'react', 'react-dom', 
+      'react-modal', 'react-redux', 'redux',
+      'redux-form'
+    ],
+  },
   output: {
     path: path.join(__dirname, 'public'),
-    filename: 'bundle.[hash].js'
+    filename: '[name].[hash].js',
+    chunkFilename: '[name]-[chunkhash].js',
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -40,6 +45,10 @@ module.exports = {
       threshold: 10240,
       minRatio: 0
     }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: Infinity,
+    }),    
     new HtmlWebpackPlugin({
       inject: true,
       filename: 'index.html',
