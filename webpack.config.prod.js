@@ -2,6 +2,10 @@ const path = require('path');
 const webpack = require('webpack');
 const CompressionPlugin = require('compression-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebpackMd5Hash = require('webpack-md5-hash');
+const ManifestPlugin = require('webpack-manifest-plugin');
+// var ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 
 module.exports = {
   entry: {
@@ -14,7 +18,7 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, 'public'),
-    filename: '[name].[hash].js',
+    filename: '[name].[chunkhash].js',
     chunkFilename: '[name]-[chunkhash].js',
   },
   plugins: [
@@ -45,14 +49,30 @@ module.exports = {
       threshold: 10240,
       minRatio: 0
     }),
+    new WebpackMd5Hash(),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: Infinity,
     }),    
     new HtmlWebpackPlugin({
       inject: true,
+      template: './src/index-template.html',
       filename: 'index.html',
-      template: './src/index-template.html'
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true
+      }
+    }),
+    new ManifestPlugin({
+      fileName: 'asset-manifest.json'
     })
   ],
   module: {
