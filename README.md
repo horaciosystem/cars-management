@@ -40,9 +40,16 @@ npm run test:watch
 ```
 
 ## Production
+First you need to run the task *build* for production:
+```
+yarn build
+or
+npm run build
+```
+and then you can start the production server
 ```
 yarn start
 or
 npm start
 ```
-It runs the *build* task and starts up a server at `localhost:5000`.
+It starts up a server at `localhost:5000`.
