@@ -37,7 +37,7 @@ export class Toolbar extends Component {
 						<input 
 							className="input is-medium" 
 							type="text" 
-							placeholder="Pesquisar" 
+							placeholder="Pesquise por marca e/ou combustível" 
 							value={this.state.searchValue}
 							onChange={this.handleSearchChange} />
 					</div>
