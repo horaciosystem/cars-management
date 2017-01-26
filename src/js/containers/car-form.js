@@ -28,15 +28,15 @@ const validate = values => {
   const errors = {}
 
   if (!values.placa) {
-    errors.placa = 'Campo requirido';
+    errors.placa = 'Requirido';
   } 
 
   if (!values.marca) {
-    errors.marca = 'Campo requirido';
+    errors.marca = 'Requirido';
   } 
 
   if (!values.modelo) {
-    errors.modelo = 'Campo requirido';
+    errors.modelo = 'Requirido';
   } 
 
   return errors;

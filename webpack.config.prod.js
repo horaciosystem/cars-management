@@ -4,8 +4,7 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
 const ManifestPlugin = require('webpack-manifest-plugin');
-// var ExtractTextPlugin = require('extract-text-webpack-plugin');
-
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -73,7 +72,8 @@ module.exports = {
     }),
     new ManifestPlugin({
       fileName: 'asset-manifest.json'
-    })
+    }),
+    new ExtractTextPlugin('css/application.scss', {allChunks: true})
   ],
   module: {
     loaders: [
@@ -85,7 +85,6 @@ module.exports = {
       {
         test: /\.scss$/,        
         loaders: ['style-loader', 'css-loader', 'sass-loader'],
-        include: path.join(__dirname, 'src/css')
       },
       {
         test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
