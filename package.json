@@ -47,7 +47,8 @@
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.10.0",
     "webpack-manifest-plugin": "^1.1.0",
-    "webpack-md5-hash": "^0.0.5"
+    "webpack-md5-hash": "^0.0.5",
+    "why-did-you-update": "^0.0.8"
   },
   "dependencies": {
     "bulma": "^0.3.1",
