@@ -5,10 +5,14 @@ export default class MainHeader extends Component {
     	super(props);
     }
 
+	shouldComponentUpdate(nextProps, nextState) {
+		return nextProps.text !== this.props.text;
+	}
+
 		render() {
 			return ( 
 				<div className="header">
-					<h1 className="title">Logo</h1>
+					<h1 className="title">{this.props.text}</h1>
 				</div>	
 			);
 

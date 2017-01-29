@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 
 export default class CarImageLink extends Component {
+  
+  shouldComponentUpdate(nextProps, nextState) {
+		return nextProps.image !== this.props.image;
+	}
+
   render() {        
     const image = this.props.image;
      
