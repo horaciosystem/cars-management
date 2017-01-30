@@ -14,6 +14,11 @@ import {
   filterCars
 } from '../reducers/cars-reducer';
 
+if (process.env.NODE_ENV === 'dev') {
+  const {whyDidYouUpdate} = require('why-did-you-update')
+  whyDidYouUpdate(React);
+}
+
 export class App extends Component {
 
   constructor(props) {
@@ -57,7 +62,7 @@ export class App extends Component {
     
     return (
       <div className="main-container">
-        <MainHeader />
+        <MainHeader text="Logo" />
         <ToolBar 
           toogleModal={this.handleToogleModal}
         />
