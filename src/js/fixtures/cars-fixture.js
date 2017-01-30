@@ -1,5 +1,7 @@
-const initialCarsState = [ 
-  { 
+import {List, Map} from 'immutable';
+
+const initialCarsState = List.of( 
+  Map({ 
     id: 1,
     combustivel: 'Flex',
     imagem: null,
@@ -7,8 +9,8 @@ const initialCarsState = [
     modelo: 'Gol',
     placa: 'FFF-5498',
     valor: '20000'
-  },
-  {
+  }),
+  Map({
     id: 2,
     combustivel: 'Gasolina',
     imagem: null,
@@ -16,8 +18,8 @@ const initialCarsState = [
     modelo: 'Fox',
     placa: 'FOX-4125',
     valor: '20000'
-  },
-  { 
+  }),
+  Map({
     id: 3,
     combustivel: 'Alcool',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
@@ -25,8 +27,8 @@ const initialCarsState = [
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
-  }
-];
+  })
+);
 
 export default initialCarsState;
 

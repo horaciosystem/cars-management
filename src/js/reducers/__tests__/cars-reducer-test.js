@@ -15,18 +15,19 @@ import {
   FILTER
 } from '../cars-reducer';
 
+import {List, Map} from 'immutable';
 import initialCarsState, { manyCars, pageOne } from '../../fixtures/cars-fixture';
 
 const initialState = {    
   cars: initialCarsState,
   filters: null,
-  pagination: {
+  pagination: Map({
 		page: 1,
 		perPage: 5,
 		total: 3,
 		totalPages: 1,
 		data: initialCarsState
-  }
+  })
 }
 
 const MANY_CARS = {

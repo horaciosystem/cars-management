@@ -1,4 +1,6 @@
 import initialStateCars, { manyCars } from '../fixtures/cars-fixture';
+import {List, Map} from 'immutable';
+
 export const LOAD   = 'LOAD';
 export const CREATE = 'CREATE';
 export const UPDATE = 'UPDATE';
@@ -7,16 +9,16 @@ export const FILTER = 'FILTER';
 
 let NEXT_ID = null;
 
-const initialState = {    
+const initialState = {   
   cars: initialStateCars,
   filters: null,
-  pagination: {
+  pagination: Map({
 		page: 1,
 		perPage: 5,
 		total: 0,
 		totalPages: 1,
-		data: []
-  }
+    data: List.of([])
+  })
 }
 
 export default function reducer(state = initialState, action = {}) {
@@ -55,8 +57,9 @@ export default function reducer(state = initialState, action = {}) {
       return state;
     }
     default: {     
-      const cars = state.cars || [];
+      const cars = state.cars || List.of([]);
       const pagination = getPaginatedItems(cars, state.pagination.page);
+      console.log(pagination);
       return {...state, pagination};
     }
   }
@@ -74,10 +77,12 @@ export default function reducer(state = initialState, action = {}) {
 export function getPaginatedItems(items, page = 1) {
   const perPage = 5;
   let offset = 0;
-  let paginatedItems = [];
+  let paginatedItems = List.of([]);
   let totalPages = 1;
-  if (items && items.length > 0 ) {
-    totalPages = Math.ceil(items.length / perPage);
+  const itemsSize = items.count();
+  if (items &&  itemsSize > 0 ) {
+    totalPages = Math.ceil(itemsSize / perPage);
+    console.log(totalPages);
     if (totalPages < page) {
       return getPaginatedItems(items, page -1);
     } else {
@@ -85,13 +90,13 @@ export function getPaginatedItems(items, page = 1) {
       paginatedItems = items.slice(offset, offset + perPage);
     }
   }  
-	return {
+	return Map({
     page: page,
 		perPage: perPage,
-		total: items.length,
+    total: itemsSize,
 		totalPages: totalPages,
 		data: paginatedItems
-	};
+  });
 }
 
 /**
