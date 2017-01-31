@@ -33,8 +33,8 @@ const initialCarsState = List.of(
 export default initialCarsState;
 
 
-const manyCars = [ 
-  { 
+const manyCars = List.of(
+  Map({ 
     id: 1,
     combustivel: 'Flex',
     imagem: null,
@@ -42,8 +42,8 @@ const manyCars = [
     modelo: 'Gol',
     placa: 'FFF-5498',
     valor: '20000'
-  },
-  {
+  }),
+  Map({
     id: 2,
     combustivel: 'Gasolina',
     imagem: null,
@@ -51,8 +51,8 @@ const manyCars = [
     modelo: 'Fox',
     placa: 'FOX-4125',
     valor: '20000'
-  },
-  { 
+  }),
+  Map({ 
     id: 3,
     combustivel: 'Alcool',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
@@ -60,8 +60,8 @@ const manyCars = [
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
-  },
-  { 
+  }),
+  Map({ 
     id: 4,
     combustivel: 'Alcool',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
@@ -69,8 +69,8 @@ const manyCars = [
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
-  },
-  { 
+  }),
+  Map({ 
     id: 5,
     combustivel: 'Alcool',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
@@ -78,8 +78,8 @@ const manyCars = [
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
-  },
-  { 
+  }),
+  Map({ 
     id: 6,
     combustivel: 'Gasolina',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
@@ -87,8 +87,8 @@ const manyCars = [
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
-  },
-  { 
+  }),
+  Map({ 
     id: 7,
     combustivel: 'Flex',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
@@ -96,8 +96,8 @@ const manyCars = [
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
-  },
-  { 
+  }),
+  Map({ 
     id: 8,
     combustivel: 'Flex',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
@@ -105,8 +105,8 @@ const manyCars = [
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
-  },
-  { 
+  }),
+  Map({ 
     id: 9,
     combustivel: 'Gasolina',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
@@ -114,8 +114,8 @@ const manyCars = [
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
-  },
-  { 
+  }),
+  Map({ 
     id: 10,
     combustivel: 'Alcool',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
@@ -123,8 +123,8 @@ const manyCars = [
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
-  },
-  { 
+  }),
+  Map({ 
     id: 11,
     combustivel: 'Alcool',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
@@ -132,8 +132,8 @@ const manyCars = [
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
-  },
-  { 
+  }),
+  Map({ 
     id: 12,
     combustivel: 'Gasolina',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
@@ -141,8 +141,8 @@ const manyCars = [
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
-  },
-  { 
+  }),
+  Map({ 
     id: 13,
     combustivel: 'Gasolina',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
@@ -150,8 +150,8 @@ const manyCars = [
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
-  },
-  { 
+  }),
+  Map({ 
     id: 14,
     combustivel: 'Flex',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
@@ -159,8 +159,8 @@ const manyCars = [
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
-  },
-  { 
+  }),
+  Map({ 
     id: 15,
     combustivel: 'Alcool',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
@@ -168,8 +168,8 @@ const manyCars = [
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
-  },
-  { 
+  }),
+  Map({ 
     id: 16,
     combustivel: 'Flex',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
@@ -177,11 +177,11 @@ const manyCars = [
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
-  }
-];
+  })
+);
 
-const pageOne = [ 
-  { 
+const pageOne = List.of( 
+  Map({ 
     id: 1,
     combustivel: 'Flex',
     imagem: null,
@@ -189,8 +189,8 @@ const pageOne = [
     modelo: 'Gol',
     placa: 'FFF-5498',
     valor: '20000'
-  },
-  {
+  }),
+  Map({
     id: 2,
     combustivel: 'Gasolina',
     imagem: null,
@@ -198,8 +198,8 @@ const pageOne = [
     modelo: 'Fox',
     placa: 'FOX-4125',
     valor: '20000'
-  },
-  { 
+  }),
+  Map({ 
     id: 3,
     combustivel: 'Alcool',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
@@ -207,8 +207,8 @@ const pageOne = [
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
-  },
-  { 
+  }),
+  Map({ 
     id: 4,
     combustivel: 'Alcool',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
@@ -216,8 +216,8 @@ const pageOne = [
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
-  },
-  { 
+  }),
+  Map({ 
     id: 5,
     combustivel: 'Alcool',
     imagem: 'http://carros.ig.com.br/fotos/2010/290_193/Fusca2_290_193.jpg',
@@ -225,7 +225,7 @@ const pageOne = [
     modelo: 'Fusca',
     placa: 'PAI-4121',
     valor: '20000'
-  }
-];
+  })
+);
 
 export { manyCars, pageOne };

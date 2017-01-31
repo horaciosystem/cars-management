@@ -30,13 +30,13 @@ export default function reducer(state = initialState, action = {}) {
       return {...state, pagination, filters};
     }
     case LOAD:
-      let filteredCars = state.cars;
-      const filters = state.filters;
-      if (filters) {
-        filteredCars = filterFunction(filters, state.cars);
+      let filteredCars = state.get('cars');
+      const filters = state.get('filters');
+      if (filters.length > 0) {
+        filteredCars = filterFunction(filters, filteredCars);
       }
-      const pagination = getPaginatedItems(filteredCars, action.page);
-      return {...state, pagination};      
+      const pagination = getPaginatedItems(filteredCars, action.page);      
+      return state.mergeIn(['pagination'], pagination);
     case REMOVE: {
       const cars = state.cars.filter(car => car.id !== action.id);
       const pagination = getPaginatedItems(cars, state.pagination.page);
@@ -77,8 +77,8 @@ export function getPaginatedItems(items, page = 1) {
   const perPage = 5;
   let offset = 0;
   let paginatedItems = List.of([]);
-  let totalPages = 1;
-  const itemsSize = items.count();
+  let totalPages = 1;  
+  const itemsSize = items ? items.count() : 0;
   if (items &&  itemsSize > 0 ) {
     totalPages = Math.ceil(itemsSize / perPage);
     console.log(totalPages);
