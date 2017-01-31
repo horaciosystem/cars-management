@@ -1,5 +1,5 @@
 import initialStateCars, { manyCars } from '../fixtures/cars-fixture';
-import {List, Map} from 'immutable';
+import Immutable,{List, Map} from 'immutable';
 
 export const LOAD   = 'LOAD';
 export const CREATE = 'CREATE';
@@ -9,17 +9,17 @@ export const FILTER = 'FILTER';
 
 let NEXT_ID = null;
 
-const initialState = {   
+const initialState = Immutable.fromJS({
   cars: initialStateCars,
-  filters: null,
-  pagination: Map({
+  filters: [],
+  pagination: Immutable.fromJS({
 		page: 1,
 		perPage: 5,
 		total: 0,
 		totalPages: 1,
     data: List.of([])
   })
-}
+})
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {    
@@ -57,10 +57,9 @@ export default function reducer(state = initialState, action = {}) {
       return state;
     }
     default: {     
-      const cars = state.cars || List.of([]);
-      const pagination = getPaginatedItems(cars, state.pagination.page);
-      console.log(pagination);
-      return {...state, pagination};
+      const cars = state.get('cars') || List.of([]);
+      const pagination = getPaginatedItems(cars, state.get('pagination').get('page'));
+      return state.mergeIn(['pagination'], pagination);
     }
   }
 }

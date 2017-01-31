@@ -15,12 +15,12 @@ import {
   FILTER
 } from '../cars-reducer';
 
-import {List, Map} from 'immutable';
+import Immutable, {List, Map} from 'immutable';
 import initialCarsState, { manyCars, pageOne } from '../../fixtures/cars-fixture';
 
-const initialState = {    
+const initialState = Immutable.fromJS({    
   cars: initialCarsState,
-  filters: null,
+  filters: [],
   pagination: Map({
 		page: 1,
 		perPage: 5,
@@ -28,10 +28,10 @@ const initialState = {
 		totalPages: 1,
 		data: initialCarsState
   })
-}
+});
 
 const MANY_CARS = {
-  filters: null,
+  filters: [],
   cars: manyCars,
   pagination: {
 		page: 1,
@@ -43,10 +43,11 @@ const MANY_CARS = {
 }
 
 describe('CarList reducer', () => {
-  it('should return the initial state', () => {
-    expect(
-      reducer(undefined, {})
-    ).toEqual(initialState)
+  fit('should return the initial state', () => {
+    const newState = reducer(undefined, {});    
+    expect(newState.get('cars').toJS()).toEqual(initialState.get('cars').toJS())
+    expect(newState.get('filters').toJS()).toEqual(initialState.get('filters').toJS())
+    expect(newState.get('pagination').toJS()).toEqual(initialState.get('pagination').toJS())
   });
 
   it('should return initial page 1 when handle DEFAULT with initial state', () => {
