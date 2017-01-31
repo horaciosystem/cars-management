@@ -18,7 +18,7 @@ import {
 import Immutable, {List, Map} from 'immutable';
 import initialCarsState, { manyCars, pageOne } from '../../fixtures/cars-fixture';
 
-const initialState = Immutable.fromJS({    
+const initialState = Map({    
   cars: initialCarsState,
   filters: [],
   pagination: Map({
@@ -30,7 +30,7 @@ const initialState = Immutable.fromJS({
   })
 });
 
-const MANY_CARS = Immutable.fromJS({
+const MANY_CARS = Map({
   filters: [],
   cars: manyCars,
   pagination: {
@@ -97,7 +97,7 @@ describe('CarList reducer', () => {
     expect(paginatedItems.toJS()[4].id).toEqual(10);    
   });
 
-  fit('should handle CREATE', () => {
+  it('should handle CREATE', () => {
     const carToAdd = { 
       combustivel: 'Flex',
       imagem: null,
@@ -106,7 +106,7 @@ describe('CarList reducer', () => {
       placa: 'MFH-5577',
       valor: '23.500'
     };
-    const expectedCar = { 
+    const expectedCar = {
       id: 4,
       combustivel: 'Flex',
       imagem: null,
@@ -117,9 +117,10 @@ describe('CarList reducer', () => {
     };
 
     const newState = reducer(initialState, createCar(carToAdd));
-    const mergedState = initialState.mergeIn(['pagination', 'data'], expectedCar);
-    expect(newState.getIn(['pagination', 'data'])).toEqual(mergedState);
-    expect(newState.get('cars').pop()).toEqual(expectedCar);
+    const cars = initialState.get('cars').push(expectedCar);
+    const mergedState = initialState.mergeIn(['cars'], cars);
+    expect(newState.get('cars').toJS()).toEqual(mergedState.get('cars').toJS());    
+    expect(newState.get('cars').find(item => item.get('id') === 4).toJS()).toEqual(expectedCar);
   });
 
   it('should CREATE a car with ID incresed by the last', () => {
@@ -142,7 +143,7 @@ describe('CarList reducer', () => {
     };
 
     const newState = reducer(MANY_CARS, createCar(carToAdd));    
-    const lastCar = newState.cars.pop();
+    const lastCar = newState.get('cars').toJS().pop();
     expect(lastCar.id).toEqual(17);
   });
 
@@ -159,9 +160,9 @@ describe('CarList reducer', () => {
     const newStateTwo = reducer(newStateOne, createCar(carToAdd));
     const newStateThree = reducer(newStateTwo, createCar(carToAdd));
     
-    expect(newStateThree.pagination.data.length).toEqual(5);    
-    expect(newStateThree.pagination.total).toEqual(6);
-    expect(newStateThree.pagination.totalPages).toEqual(2);
+    expect(newStateThree.getIn(['pagination','data']).count()).toEqual(5);    
+    expect(newStateThree.getIn(['pagination','total'])).toEqual(6);
+    expect(newStateThree.getIn(['pagination','totalPages'])).toEqual(2);
   });
 
   it('should return the same page after CREATE', () => {
@@ -174,18 +175,22 @@ describe('CarList reducer', () => {
       placa: 'OCT-2015',
       valor: '28.000'
     };
-    const newState = reducer({...MANY_CARS, pagination: {
+
+    const pagination = Map({
       page: 3,
       perPage: 5,
       total: 16,
       totalPages: 4,
       data: manyCars
-    }}, createCar(car));
-    expect(newState.pagination.page).toEqual(3);
-    expect(newState.pagination.total).toEqual(17);
+    });
+    const mergedState = MANY_CARS.mergeIn(['pagination'], pagination);
+
+    const newState = reducer(mergedState, createCar(car));
+    expect(newState.getIn(['pagination','page'])).toEqual(3);
+    expect(newState.getIn(['pagination','total'])).toEqual(17);
   });
 
-  it('should handle UPDATE', () => {
+  fit('should handle UPDATE', () => {
     const car = {
       id: 2,
       combustivel: 'Gasolina',

@@ -9,15 +9,15 @@ export const FILTER = 'FILTER';
 
 let NEXT_ID = null;
 
-const initialState = Immutable.fromJS({
+const initialState = Map({
   cars: initialStateCars,
-  filters: [],
-  pagination: Immutable.fromJS({
+  filters: List(),
+  pagination: Map({
 		page: 1,
 		perPage: 5,
 		total: 0,
 		totalPages: 1,
-    data: List.of([])
+    data: List()
   })
 })
 
@@ -42,12 +42,14 @@ export default function reducer(state = initialState, action = {}) {
       const pagination = getPaginatedItems(cars, state.pagination.page);
       return {...state, cars, pagination};
     }
-    case CREATE: {      
-      NEXT_ID = (state.cars && state.cars.length + 1) || 1;
-      const newCar = {...action.car, id: NEXT_ID};      
-      const cars = [...state.cars, newCar];      
-      const pagination = getPaginatedItems(cars, state.pagination.page);
-      return {...state, cars, pagination};
+    case CREATE: {
+      NEXT_ID = (state.get('cars') && state.get('cars').count() + 1) || 1;
+      const newCar = {...action.car, id: NEXT_ID};
+      const cars = state.get('cars').push(Map(newCar));
+      console.log(cars);
+      const actualPage = state.getIn(['pagination', 'page']);
+      const pagination = getPaginatedItems(cars, actualPage);
+      return state.merge(Map({ pagination, cars }));
     }
     case UPDATE: {
       const originalIndex =  state.cars.findIndex(car => car.id === action.car.id);
