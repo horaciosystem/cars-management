@@ -241,9 +241,15 @@ describe('CarList reducer', () => {
     expect(newState.getIn(['pagination', 'page'])).toEqual(3);
   });
 
-  fit('should handle REMOVE', () => {
+  it('should not change the state when UPDATE an inexistent car', () => {
     expect(
-        reducer(initialState, removeCar(3)).cars
+        reducer(initialState, updateCar({id: 765765})).toJS()
+    ).toEqual(initialState.toJS());
+  });
+
+  it('should handle REMOVE', () => {
+    expect(
+        reducer(initialState, removeCar(3)).get('cars').toJS()
           .some(car => car.id === 3)
     ).toBe(false);
   });
@@ -256,37 +262,40 @@ describe('CarList reducer', () => {
   });
 
   it('should return the same page after REMOVE', () => {
-    const newState = reducer({...MANY_CARS, pagination: {
+    const pagination = Map({
       page: 2,
       perPage: 5,
       total: 15,
       totalPages: 4,
       data: manyCars
-    }}, removeCar(7));
-    expect(newState.pagination.page).toEqual(2);
+    });
+    const mergedState = MANY_CARS.mergeIn(['pagination'], pagination);
+    const newState = reducer(mergedState, removeCar(7));
+    expect(newState.getIn(['pagination', 'page'])).toEqual(2);
   });
 
   it('should not change the state when REMOVE an inexistent car', () => {
     expect(
-        reducer(initialState, removeCar(14234))          
-    ).toEqual(initialState);
+        reducer(initialState, removeCar(14234)).toJS()          
+    ).toEqual(initialState.toJS());
   });
 
   it('should return the previous page when REMOVE the last car of the page', () => {
-    const newState = reducer({...MANY_CARS, pagination: {
+    const pagination = Map({
       page: 4,
       perPage: 5,
       total: 15,
       totalPages: 4,
       data: manyCars
-    }}, removeCar(16));
+    });
+    const mergedState = MANY_CARS.mergeIn(['pagination'], pagination);
+    const newState = reducer(mergedState, removeCar(16));
 
-    expect(newState.pagination.page).toEqual(3);
-    expect(newState.pagination.totalPages).toEqual(3);
+    expect(newState.getIn(['pagination', 'page'])).toEqual(3);
+    expect(newState.getIn(['pagination', 'totalPages'])).toEqual(3);
   });
 
-
-  it('should FILTER cars by fuel', () => {
+  fit('should FILTER cars by fuel', () => {
     const query = 'flex';
     const newState = reducer(MANY_CARS, filterCars(query));
     const {cars, pagination} = newState;

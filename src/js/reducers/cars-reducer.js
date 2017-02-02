@@ -38,9 +38,15 @@ export default function reducer(state = initialState, action = {}) {
       const pagination = getPaginatedItems(filteredCars, action.page);      
       return state.mergeIn(['pagination'], pagination);
     case REMOVE: {
-      const cars = state.cars.filter(car => car.id !== action.id);
-      const pagination = getPaginatedItems(cars, state.pagination.page);
-      return {...state, cars, pagination};
+      const index = state.get('cars').findIndex(item => item.get('id') === action.id);
+
+      if (index >= 0) {
+        const cars = state.get('cars').delete(index);
+        const pagination = getPaginatedItems(cars, state.getIn(['pagination', 'page']));
+        return state.merge(Map({cars, pagination}));
+      } else { 
+        return state
+      }
     }
     case CREATE: {
       NEXT_ID = (state.get('cars') && state.get('cars').count() + 1) || 1;
@@ -52,15 +58,15 @@ export default function reducer(state = initialState, action = {}) {
       return state.merge(Map({ pagination, cars }));
     }
     case UPDATE: {
-      const cars = state.get('cars').update(
-        state.get('cars').findIndex(item => 
-          item.get('id') === action.car.id
-        ), (item) => item.merge(action.car)
-      );
-      
-      const actualPage = state.getIn(['pagination', 'page']);
-      const pagination = getPaginatedItems(cars, actualPage);      
-      return state.merge(Map({ pagination, cars }));
+      const index = state.get('cars').findIndex(item => item.get('id') === action.car.id);
+      if (index >= 0) {
+        const cars = state.get('cars').update(index, (item) => item.merge(action.car));
+        const actualPage = state.getIn(['pagination', 'page']);
+        const pagination = getPaginatedItems(cars, actualPage);      
+        return state.merge(Map({ pagination, cars }));
+      } else {
+        return state;
+      }
     }
     default: {     
       const cars = state.get('cars') || List.of([]);
