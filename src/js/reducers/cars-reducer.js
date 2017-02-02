@@ -25,9 +25,9 @@ export default function reducer(state = initialState, action = {}) {
   switch (action.type) {    
     case FILTER: {      
       const filters = extractFiltersFromQuery(action.query);         
-      const filteredCars = filterFunction(filters, state.cars);
+      const filteredCars = filterFunction(filters, state.get('cars'));
       const pagination = getPaginatedItems(filteredCars, action.page);
-      return {...state, pagination, filters};
+      return state.merge(Map({ pagination, filters}));
     }
     case LOAD:
       let filteredCars = state.get('cars');
@@ -112,16 +112,15 @@ export function getPaginatedItems(items, page = 1) {
 
 /**
 * Function that applies filters in all items. 
-* It pass forward the result of each filter to apply the next one.
-* returns the an array of the accumulated items.
+* It pass forward the result of each filter to apply to the next one.
+* returns an array of the accumulated items.
  */
 function filterFunction(filters, items) {
   return filters.reduce((acc, filter) => {     
-    let newItems = acc.filter(car => 
-      car.combustivel.toLowerCase().includes(filter.toLowerCase()) 
-        || car.marca.toLowerCase().includes(filter.toLowerCase())
+    return acc.filter(car => 
+      car.get('combustivel').toLowerCase().includes(filter.toLowerCase()) 
+        || car.get('marca').toLowerCase().includes(filter.toLowerCase())
     );
-    return acc = newItems;
   }, items);
 }
 

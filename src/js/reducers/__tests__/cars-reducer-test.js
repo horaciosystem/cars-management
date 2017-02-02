@@ -20,7 +20,7 @@ import initialCarsState, { manyCars, pageOne } from '../../fixtures/cars-fixture
 
 const initialState = Map({    
   cars: initialCarsState,
-  filters: [],
+  filters: List(),
   pagination: Map({
 		page: 1,
 		perPage: 5,
@@ -31,7 +31,7 @@ const initialState = Map({
 });
 
 const MANY_CARS = Map({
-  filters: [],
+  filters: List(),
   cars: manyCars,
   pagination: Map({
 		page: 1,
@@ -45,9 +45,9 @@ const MANY_CARS = Map({
 describe('CarList reducer', () => {
   it('should return the initial state', () => {
     const newState = reducer(undefined, {});    
-    expect(newState.get('cars').toJS()).toEqual(initialState.get('cars').toJS())
-    expect(newState.get('filters').toJS()).toEqual(initialState.get('filters').toJS())
-    expect(newState.get('pagination').toJS()).toEqual(initialState.get('pagination').toJS())
+    expect(newState.get('cars')).toEqual(initialState.get('cars'));
+    expect(newState.get('filters')).toEqual(initialState.get('filters'));
+    expect(newState.get('pagination')).toEqual(initialState.get('pagination'));
   });
 
   it('should return initial page 1 when handle DEFAULT with initial state', () => {
@@ -256,9 +256,9 @@ describe('CarList reducer', () => {
 
   it('should handle REMOVE', () => {
     const newState = reducer(MANY_CARS, removeCar(3));        
-    expect(newState.pagination.data.length).toEqual(5);    
-    expect(newState.pagination.total).toEqual(15);
-    expect(newState.pagination.totalPages).toEqual(3);
+    expect(newState.getIn(['pagination','data']).count()).toEqual(5);    
+    expect(newState.getIn(['pagination','total'])).toEqual(15);
+    expect(newState.getIn(['pagination','totalPages'])).toEqual(3);
   });
 
   it('should return the same page after REMOVE', () => {
@@ -295,64 +295,57 @@ describe('CarList reducer', () => {
     expect(newState.getIn(['pagination', 'totalPages'])).toEqual(3);
   });
 
-  fit('should FILTER cars by fuel', () => {
+  it('should FILTER cars by fuel', () => {
     const query = 'flex';
-    const newState = reducer(MANY_CARS, filterCars(query));
-    const {cars, pagination} = newState;
-    expect(pagination.data.length).toEqual(5);
+    const newState = reducer(MANY_CARS, filterCars(query));    
+    expect(newState.getIn(['pagination','data']).count()).toEqual(5);
   });
 
   it('should FILTER cars by fuel partial description', () => {
     const query = 'fl';
-    const newState = reducer(MANY_CARS, filterCars(query));
-    const {pagination, cars} = newState;
+    const newState = reducer(MANY_CARS, filterCars(query));    
     expect(
-      pagination.data.length
+      newState.getIn(['pagination','data']).count()
     ).toEqual(5)
   });
 
   it('should FILTER cars by brand Volkswagem', () => {
     const query = 'volkswagem';
-    const newState = reducer(MANY_CARS, filterCars(query));
-    const {pagination, cars} = newState;
+    const newState = reducer(MANY_CARS, filterCars(query));    
     expect(
-      pagination.data.length
+      newState.getIn(['pagination','data']).count()
     ).toEqual(4)
   });
 
   it('should FILTER cars by brand Volkswagen', () => {
     const query = 'volkswagen';
     const newState = reducer(MANY_CARS, filterCars(query));
-    const {pagination, cars} = newState;
     expect(
-      pagination.data.length
+      newState.getIn(['pagination','data']).count()
     ).toEqual(5)
   });
 
   it('should FILTER cars by brand partial description', () => {
     const query = 'volks';
-    const newState = reducer(MANY_CARS, filterCars(query));
-    const {pagination, cars} = newState;
+    const newState = reducer(MANY_CARS, filterCars(query));    
     expect(
-      pagination.total
+      newState.getIn(['pagination','total'])
     ).toEqual(9)
   });
 
   it('should FILTER cars by fuel and brand', () => {
     const query = 'flex volkswagem';
     const newState = reducer(MANY_CARS, filterCars(query));
-    const {pagination, cars} = newState;
-    expect(
-      pagination.data.length
+    expect(    
+      newState.getIn(['pagination','data']).count()
     ).toEqual(1)
   });
 
   it('should FILTER cars by brand and fuel', () => {
     const query = 'volkswagem flex';
     const newState = reducer(MANY_CARS, filterCars(query));
-    const {pagination, cars} = newState;
     expect(
-      pagination.data.length
+      newState.getIn(['pagination','data']).count()
     ).toEqual(1)
   });
   
@@ -360,27 +353,24 @@ describe('CarList reducer', () => {
   it('should FILTER cars by fuel partial decription and brand', () => {
     const query = 'gas volkswagem';
     const newState = reducer(MANY_CARS, filterCars(query));
-    const {pagination, cars} = newState;
     expect(
-      pagination.data.length
+      newState.getIn(['pagination','data']).count()
     ).toEqual(2)
   });
 
   it('should FILTER cars by fuel and brand partial description', () => {
     const query = 'gasolina volks';
-    const newState = reducer(MANY_CARS, filterCars(query));
-    const {pagination, cars} = newState;
+    const newState = reducer(MANY_CARS, filterCars(query));    
     expect(
-      pagination.data.length
+      newState.getIn(['pagination','data']).count()
     ).toEqual(3)
   });
 
-  it('should return the same state when FILTER with an empty query', () => {
+  fit('should return the same state when FILTER with an empty query', () => {
     const query = '';
-    const newState = reducer(MANY_CARS, filterCars(query));
-    const {filters, cars} = newState;
-    expect(cars).toEqual(MANY_CARS.cars);
-    expect(filters).toEqual(['']);
+    const newState = reducer(MANY_CARS, filterCars(query));    
+    expect(newState.get('cars')).toEqual(MANY_CARS.get('cars'));
+    expect(newState.get('filters')).toEqual(List.of(''));
   });
 
 
