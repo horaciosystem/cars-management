@@ -52,11 +52,15 @@ export default function reducer(state = initialState, action = {}) {
       return state.merge(Map({ pagination, cars }));
     }
     case UPDATE: {
-      const originalIndex =  state.cars.findIndex(car => car.id === action.car.id);
-      let carToUpdate = state.cars.find(car => car.id === action.car.id);
-      const updatedCar = {...carToUpdate, ...action.car};
-      state.cars[originalIndex] = updatedCar;
-      return state;
+      const cars = state.get('cars').update(
+        state.get('cars').findIndex(item => 
+          item.get('id') === action.car.id
+        ), (item) => item.merge(action.car)
+      );
+      
+      const actualPage = state.getIn(['pagination', 'page']);
+      const pagination = getPaginatedItems(cars, actualPage);      
+      return state.merge(Map({ pagination, cars }));
     }
     default: {     
       const cars = state.get('cars') || List.of([]);

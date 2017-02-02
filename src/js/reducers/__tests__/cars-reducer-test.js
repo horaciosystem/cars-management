@@ -33,13 +33,13 @@ const initialState = Map({
 const MANY_CARS = Map({
   filters: [],
   cars: manyCars,
-  pagination: {
+  pagination: Map({
 		page: 1,
 		perPage: 5,
 		total: 15,
 		totalPages: 4,
 		data: manyCars
-	}
+  })
 });
 
 describe('CarList reducer', () => {
@@ -190,7 +190,7 @@ describe('CarList reducer', () => {
     expect(newState.getIn(['pagination','total'])).toEqual(17);
   });
 
-  fit('should handle UPDATE', () => {
+  it('should handle UPDATE', () => {
     const car = {
       id: 2,
       combustivel: 'Gasolina',
@@ -200,10 +200,9 @@ describe('CarList reducer', () => {
       placa: 'FOX-4125',
       valor: '17.650'
     };
-    
+    const newState = reducer(initialState, updateCar(car));
     expect(
-        reducer(initialState, updateCar(car)).cars
-          .find(car => car.id === 2)
+        newState.get('cars').toJS().find(car => car.id === 2)
     ).toEqual(car);
   });
 
@@ -214,10 +213,10 @@ describe('CarList reducer', () => {
       valor: '15.000'
     };
     
-    const originalIndex = MANY_CARS.pagination.data.findIndex(car => car.id === 2);    
+    const originalIndex = MANY_CARS.getIn(['pagination','data']).findIndex(car => car.get('id') === 2);
     const newState = reducer(MANY_CARS, updateCar(car));
-    expect(newState.pagination.data.find(car => car.id === 2).valor).toEqual('15.000');
-    expect(newState.pagination.data.findIndex(car => car.id === 2)).toEqual(originalIndex);
+    expect(newState.getIn(['pagination','data']).find(car => car.get('id') === 2).get('valor')).toEqual('15.000');
+    expect(newState.getIn(['pagination','data']).toJS().findIndex(car => car.id === 2)).toEqual(originalIndex);
   });
 
   it('should return the same page after UPDATE', () => {
@@ -230,17 +229,19 @@ describe('CarList reducer', () => {
       placa: 'OCT-2015',
       valor: '28.000'
     };
-    const newState = reducer({...MANY_CARS, pagination: {
+    const pagination = Map({
       page: 3,
       perPage: 5,
       total: 15,
       totalPages: 4,
       data: manyCars
-    }}, updateCar(car));
-    expect(newState.pagination.page).toEqual(3);
+    });
+    const mergedState = MANY_CARS.mergeIn(['pagination'], pagination);
+    const newState = reducer(mergedState, updateCar(car));
+    expect(newState.getIn(['pagination', 'page'])).toEqual(3);
   });
 
-  it('should handle REMOVE', () => {
+  fit('should handle REMOVE', () => {
     expect(
         reducer(initialState, removeCar(3)).cars
           .some(car => car.id === 3)
