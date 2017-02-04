@@ -366,11 +366,11 @@ describe('CarList reducer', () => {
     ).toEqual(3)
   });
 
-  fit('should return the same state when FILTER with an empty query', () => {
+  it('should return the same state when FILTER with an empty query', () => {
     const query = '';
     const newState = reducer(MANY_CARS, filterCars(query));    
     expect(newState.get('cars')).toEqual(MANY_CARS.get('cars'));
-    expect(newState.get('filters')).toEqual(List.of(''));
+    expect(newState.get('filters')).toEqual(MANY_CARS.get('filters'));
   });
 
 
@@ -378,61 +378,62 @@ describe('CarList reducer', () => {
 
 describe('Pagination function', () => {
   it('should return the first 5 items', () => {
+    const pagination = getPaginatedItems(manyCars);
     expect(
-      getPaginatedItems(manyCars).data.length
+      pagination.get('data').count()
     ).toEqual(5);
   });
 
   it('should return from item 5 to 10', () => {
-    const result = getPaginatedItems(manyCars, 2)
+    const pagination = getPaginatedItems(manyCars, 2)
     expect(
-      result
-    ).toEqual({
+      pagination
+    ).toEqual(Map({
       page: 2,
       perPage: 5,
       total: 16,
       totalPages: 4,
       data: manyCars.slice(5, 10)
-    })    
-    expect(result.data.length).toEqual(5);
-    expect(result.data[0].id).toEqual(6);
+    }))    
+    expect(pagination.get('data').count()).toEqual(5);
+    expect(pagination.get('data').toJS()[0].id).toEqual(6);
   });
 
   it('should return from item 10 to 5', () => {
-    const result = getPaginatedItems(manyCars, 3)
+    const pagination = getPaginatedItems(manyCars, 3)
     expect(
-      result
-    ).toEqual({
+      pagination
+    ).toEqual(Map({
       page: 3,
       perPage: 5,
       total: 16,
       totalPages: 4,
       data: manyCars.slice(10, 15)
-    })
-    expect(result.data[0].id).toEqual(11);    
+    }))
+    expect(pagination.get('data').toJS()[0].id).toEqual(11);    
   });
 
   it('should return only the item ID 16', () => {
-    const result = getPaginatedItems(manyCars, 4)
+    const pagination = getPaginatedItems(manyCars, 4)
     expect(
-      result
-    ).toEqual({
+      pagination
+    ).toEqual(Map({
       page: 4,
       perPage: 5,
       total: 16,
       totalPages: 4,
       data: manyCars.slice(15, manyCars.length)
-    });
-    expect(result.data[0].id).toEqual(16);    
+    }));
+    expect(pagination.get('data').toJS()[0].id).toEqual(16);    
   });
 
   it('should return the next page with items', () => {
-    manyCars.pop();
-    const pagination = getPaginatedItems(manyCars, 4);
-    expect(pagination.page).toEqual(3);
+    const newState = manyCars.pop();
+    const pagination = getPaginatedItems(newState, 4);
+    expect(pagination.get('page')).toEqual(3);
 
-    const items = pagination.data;
-    expect(items.pop().id).toEqual(15);
+    
+    expect(pagination.get('data').last().get('id')).toEqual(15);
   });
 
 });
