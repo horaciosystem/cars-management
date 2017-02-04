@@ -70,7 +70,7 @@ export class App extends Component {
           toogleModal={this.handleToogleModal}
           onDelete={this.onDeleteCar}
         />        
-        {this.props.carsState.pagination.totalPages > 1 &&
+        {this.props.carsState.getIn(['pagination','totalPages']) > 1 &&
           <Pagination 
             carsState={this.props.carsState}
           />
@@ -79,7 +79,7 @@ export class App extends Component {
           <CarForm
             title={carToUpdate ? 'Editar Veículo' : 'Cadastrar Veículo'}
             onSubmit={carToUpdate ? this.onUpdateCar : this.onCreateCar}
-            initialValues={carToUpdate ? carToUpdate : {combustivel: 'Flex'}}
+            initialValues={carToUpdate ? carToUpdate.toJS() : {combustivel: 'Flex'}}
             toogleModal={this.handleToogleModal}
             modalIsOpen
           />          

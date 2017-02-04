@@ -6,7 +6,7 @@ import { loadCars } from '../reducers/cars-reducer';
 class Pagination extends Component {
 
   getItemStyle(page) {
-    const actualPage = this.props.carsState.pagination.page;
+    const actualPage = this.props.carsState.getIn(['pagination', 'page']);
     if (page === actualPage) 
       return 'pagination-link is-current';
 
@@ -18,7 +18,7 @@ class Pagination extends Component {
   }
 
   render() {    
-    const { totalPages, page } = this.props.carsState.pagination;
+    const { totalPages, page } = this.props.carsState.get('pagination').toJS();
     const pages = Array.apply(0, Array(totalPages)).map((_, i) => i);    
     return (
       <nav className="pagination is-centered">        

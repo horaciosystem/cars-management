@@ -8,7 +8,7 @@ export default class CarListItem extends Component {
     const {
       placa, modelo, marca,
       imagem, combustivel, valor      
-    } = car;
+    } = car.toJS();
 
     return(
       <tr className="car-list-item">
@@ -25,7 +25,7 @@ export default class CarListItem extends Component {
             <a onClick={() => onEdit(car)}>
               Editar
             </a>                          
-            <a onClick={() => onDelete(car.id)}>
+            <a onClick={() => onDelete(car.get('id'))}>
               Excluir
             </a>
           </div>

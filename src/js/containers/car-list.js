@@ -8,6 +8,10 @@ export class CarList extends Component {
     	super(props);
     }
 
+		shouldComponentUpdate(nextProps, nextState) {
+			return nextProps.carsState.get('pagination') !== this.props.carsState.get('pagination');
+		}
+
 		render() {			
 			return ( 
 				<div className="car-list">
@@ -32,10 +36,10 @@ export class CarList extends Component {
 		}
 
 		renderItems(toogleModal, onDelete) {
-			const pagination = this.props.carsState.pagination;
-			return pagination.data.map(car => 
+			const pagination = this.props.carsState.get('pagination');
+			return pagination.get('data').map(car => 
 				<CarListItem 
-					key={`car-${car.id}-${car.marca}-${car.modelo}`}
+					key={`car-${car.get('id')}-${car.get('marca')}-${car.get('modelo')}`}
 				 	car={car}
 					onEdit={this.props.toogleModal}
 					onDelete={this.props.onDelete}
