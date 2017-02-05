@@ -79,7 +79,7 @@ export class App extends Component {
           <CarForm
             title={carToUpdate ? 'Editar Veículo' : 'Cadastrar Veículo'}
             onSubmit={carToUpdate ? this.onUpdateCar : this.onCreateCar}
-            initialValues={carToUpdate ? carToUpdate.toJS() : {combustivel: 'Flex'}}
+            initialValues={carToUpdate ? carToUpdate.toJS() : {combustivel: 'Flex', valor: 0}}
             toogleModal={this.handleToogleModal}
             modalIsOpen
           />          
