@@ -26,7 +26,7 @@ export default function reducer(state = initialState, action = {}) {
     case FILTER: {      
       const filterQuery = action.query;
       const filters = extractFiltersFromQuery(filterQuery);
-      const filteredCars = filterFunction(filters, state.get('cars'));
+      const filteredCars = applyFilters(filters, state.get('cars'));
       const pagination = getPaginatedItems(filteredCars, action.page);
       return state.merge(Map({ pagination, filters}));
     }
@@ -34,7 +34,7 @@ export default function reducer(state = initialState, action = {}) {
       let filteredCars = state.get('cars');
       const filters = state.get('filters');
       if (filters.length > 0) {
-        filteredCars = filterFunction(filters, filteredCars);
+        filteredCars = applyFilters(filters, filteredCars);
       }
       const pagination = getPaginatedItems(filteredCars, action.page);      
       return state.mergeIn(['pagination'], pagination);
@@ -69,7 +69,7 @@ export default function reducer(state = initialState, action = {}) {
       }
     }
     default: {     
-      const cars = state.get('cars') || List.of([]);
+      const cars = state.get('cars') || List();
       const pagination = getPaginatedItems(cars, state.get('pagination').get('page'));
       return state.mergeIn(['pagination'], pagination);
     }
@@ -88,7 +88,7 @@ export default function reducer(state = initialState, action = {}) {
 export function getPaginatedItems(items, page = 1) {
   const perPage = 5;
   let offset = 0;
-  let paginatedItems = List.of([]);
+  let paginatedItems = List();
   let totalPages = 1;  
   const itemsSize = items ? items.count() : 0;
   if (items &&  itemsSize > 0 ) {
@@ -114,12 +114,13 @@ export function getPaginatedItems(items, page = 1) {
 * It pass forward the result of each filter to apply to the next one.
 * returns an array of the accumulated items.
  */
-function filterFunction(filters, items) {
-  return filters.reduce((acc, filtro) => {
-    return acc.filter(car => 
+export function applyFilters(filters, items) {
+  return filters.reduce((acc, filtro) => {        
+    let foo = acc.filter(car => 
       car.get('combustivel').toLowerCase().includes(filtro.toLowerCase()) 
         || car.get('marca').toLowerCase().includes(filtro.toLowerCase())
-    );
+    );        
+    return foo;
   }, items);
 }
 

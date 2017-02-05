@@ -4,7 +4,8 @@ import reducer, {
   createCar,
   updateCar,
   removeCar,
-  getPaginatedItems
+  getPaginatedItems,
+  applyFilters
 } from '../cars-reducer';
 
 import {
@@ -38,7 +39,7 @@ const MANY_CARS = Map({
 		perPage: 5,
 		total: 16,
 		totalPages: 4,
-		data: List(manyCars.slice(0, 5))
+		data: manyCars.slice(0, 5)
   })
 });
 
@@ -373,6 +374,13 @@ describe('CarList reducer', () => {
     expect(newState.get('pagination')).toEqual(MANY_CARS.get('pagination'));
   });
 
+  it('should return no data when FILTER with an invalid query', () => {
+    const query = 'ahasd123xvkcjh';
+    const newState = reducer(MANY_CARS, filterCars(query));    
+    expect(newState.get('cars')).toEqual(MANY_CARS.get('cars'));
+    expect(newState.getIn(['pagination', 'data'])).toEqual(List());
+  });
+
 
 });
 
@@ -490,4 +498,3 @@ describe('CarList actions reducer', () => {
   });
 
 });
-
