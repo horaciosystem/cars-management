@@ -36,9 +36,9 @@ const MANY_CARS = Map({
   pagination: Map({
 		page: 1,
 		perPage: 5,
-		total: 15,
+		total: 16,
 		totalPages: 4,
-		data: manyCars
+		data: List(manyCars.slice(0, 5))
   })
 });
 
@@ -370,7 +370,7 @@ describe('CarList reducer', () => {
     const query = '';
     const newState = reducer(MANY_CARS, filterCars(query));    
     expect(newState.get('cars')).toEqual(MANY_CARS.get('cars'));
-    expect(newState.get('filters')).toEqual(MANY_CARS.get('filters'));
+    expect(newState.get('pagination')).toEqual(MANY_CARS.get('pagination'));
   });
 
 

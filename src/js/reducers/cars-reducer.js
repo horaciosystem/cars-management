@@ -25,9 +25,6 @@ export default function reducer(state = initialState, action = {}) {
   switch (action.type) {    
     case FILTER: {      
       const filterQuery = action.query;
-      if (!filterQuery) {
-        return state;
-      }
       const filters = extractFiltersFromQuery(filterQuery);
       const filteredCars = filterFunction(filters, state.get('cars'));
       const pagination = getPaginatedItems(filteredCars, action.page);

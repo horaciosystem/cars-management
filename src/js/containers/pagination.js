@@ -17,6 +17,10 @@ class Pagination extends Component {
     this.props.loadCars(page);
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.carsState.get('pagination') !== this.props.carsState.get('pagination');
+  }
+
   render() {    
     const { totalPages, page } = this.props.carsState.get('pagination').toJS();
     const pages = Array.apply(0, Array(totalPages)).map((_, i) => i);    
