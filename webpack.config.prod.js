@@ -12,7 +12,7 @@ module.exports = {
     vendor: [
       'lodash', 'react', 'react-dom', 
       'react-modal', 'react-redux', 'redux',
-      'redux-form'
+      'redux-form', 'immutable'
     ],
   },
   output: {

@@ -10,7 +10,7 @@ module.exports = {
     vendor: [
       'lodash', 'react', 'react-dom', 
       'react-modal', 'react-redux', 'redux',
-      'redux-form', 'webpack-hot-middleware/client'
+      'redux-form', 'immutable','webpack-hot-middleware/client'
     ],
   },
   output: {
