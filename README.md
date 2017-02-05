@@ -62,6 +62,7 @@ It starts up a server at `localhost:5000`.
 ### Client
   * react - https://facebook.github.io/react/
   * redux - https://github.com/reactjs/redux
+  * immutable - https://facebook.github.io/immutable-js/
   * react-modal - https://github.com/reactjs/react-modal
   * redux-form - http://redux-form.com/6.5.0/
   * bulma - http://bulma.io/
