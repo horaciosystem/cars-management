@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 
 export default class MainHeader extends Component {
-    constructor(props) {
-    	super(props);
-    }
 
 	shouldComponentUpdate(nextProps, nextState) {
 		return nextProps.text !== this.props.text;

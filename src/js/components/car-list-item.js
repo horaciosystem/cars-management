@@ -7,6 +7,7 @@ export default class CarListItem extends Component {
   shouldComponentUpdate(nextProps, nextState) {
 		return nextProps.car !== this.props.car;
 	}
+  
   render() {
     const {car, onEdit, onDelete} = this.props;
     const {

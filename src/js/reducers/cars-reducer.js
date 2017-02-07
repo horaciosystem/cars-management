@@ -10,7 +10,7 @@ export const FILTER = 'FILTER';
 let NEXT_ID = null;
 
 const initialState = Map({
-  cars: initialStateCars,
+  cars: manyCars,
   filters: List(),
   pagination: Map({
 		page: 1,

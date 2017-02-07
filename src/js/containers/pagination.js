@@ -5,7 +5,7 @@ import { loadCars } from '../reducers/cars-reducer';
 
 class Pagination extends Component {
 
-  getItemStyle(page) {
+  getItemStyle = (page) => {
     const actualPage = this.props.carsState.getIn(['pagination', 'page']);
     if (page === actualPage) 
       return 'pagination-link is-current';
@@ -13,7 +13,7 @@ class Pagination extends Component {
     return 'pagination-link';
   }
 
-  navigateToPage(page) {
+  navigateToPage = (page) => {
     this.props.loadCars(page);
   }
 
@@ -30,7 +30,7 @@ class Pagination extends Component {
           {pages && pages.map(pageNumber =>
             <li 
               key={`page-${pageNumber}`}
-              onClick={() => this.navigateToPage(pageNumber + 1)}>
+              onClick={(e) => this.navigateToPage(pageNumber + 1)}>
               <a className={this.getItemStyle(pageNumber + 1)} >
                 {pageNumber + 1}
               </a>

@@ -7,18 +7,17 @@ import { filterCars } from '../reducers/cars-reducer';
 export class Toolbar extends Component {
     constructor(props) {
     	super(props);
-			this.handleSearchChange = this.handleSearchChange.bind(this);
 			this.onFilterCars = debounce(300, this.onFilterCars.bind(this));
 			this.state = {searchValue: ''};
     }
 
-		handleSearchChange(event) {
+		handleSearchChange = (event) => {
 			const searchValue = event.target.value;
 			this.setState({searchValue});
 			this.onFilterCars(searchValue);
   	}
 
-		onFilterCars(query) {
+		onFilterCars = (query) => {
 			this.props.filterCars(query);
 		}
 

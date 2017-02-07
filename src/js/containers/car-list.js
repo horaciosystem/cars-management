@@ -4,9 +4,6 @@ import { bindActionCreators } from 'redux';
 import CarListItem from '../components/car-list-item';
 
 export class CarList extends Component {
-    constructor(props) {
-    	super(props);
-    }
 
 		shouldComponentUpdate(nextProps, nextState) {
 			return nextProps.carsState !== this.props.carsState;
@@ -35,7 +32,7 @@ export class CarList extends Component {
 			);
 		}
 
-		renderItems(toogleModal, onDelete) {
+		renderItems = (toogleModal, onDelete) => {
 			const pagination = this.props.carsState.get('pagination');
 			return pagination.get('data').map(car =>								
 				<CarListItem 

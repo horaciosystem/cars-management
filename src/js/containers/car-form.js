@@ -61,9 +61,6 @@ const customStyles = {
 };
 
 class CarForm extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   onSubmit(form) {
     return this.props.onSubmit(form)
