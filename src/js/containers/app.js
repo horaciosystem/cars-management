@@ -20,21 +20,12 @@ if (process.env.NODE_ENV === 'dev') {
 }
 
 export class App extends Component {
+  state = {
+    modalIsOpen: false,
+    carToUpdate: null
+  };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      modalIsOpen: false,
-      carToUpdate: null
-    }
-
-    this.handleToogleModal = this.handleToogleModal.bind(this);
-    this.onCreateCar = this.onCreateCar.bind(this);
-    this.onUpdateCar = this.onUpdateCar.bind(this);
-    this.onDeleteCar = this.onDeleteCar.bind(this);
-  }
-
-  handleToogleModal(car) {
+  handleToogleModal = (car) => {
     this.setState((prevState, props) => {
       return {
         modalIsOpen: !prevState.modalIsOpen,
@@ -43,17 +34,17 @@ export class App extends Component {
     });
   }
 
-  onCreateCar(car) {
+  onCreateCar = (car) => {
     this.props.createCar(car);
     this.handleToogleModal(null);
   }
 
-  onUpdateCar(car) {
+  onUpdateCar = (car) => {
     this.props.updateCar(car);
     this.handleToogleModal(null);
   }
 
-  onDeleteCar(carId) {
+  onDeleteCar = (carId) => {
     this.props.removeCar(carId);    
   }
 
